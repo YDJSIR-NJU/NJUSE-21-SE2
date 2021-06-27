@@ -1,0 +1,727 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>概念性章节</title><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 40px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  html.blink-to-pdf { font-size: 13px; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
+.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; overflow-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none 0s ease 0s; }
+.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; margin-top: 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+svg[id^="mermaidChart"] { line-height: 1em; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+
+
+/* ============================================
+ * ============ TYPORA lATEX THEME ============
+ * ============================================
+ */
+
+/* userCustom on Windows */
+
+:root {
+
+/* == 字体设置 == */
+
+	/* 基准字体 */
+	--base-Latin-font: "Latin Modern Roman", "Latin Modern Roman 10"; /* 备选：Times, "Times New Roman" */
+	--base-Chinese-font: 宋体-简, 华文宋体;
+	--base-font-size: 9.5pt;
+
+	/* 引言字体 */
+	--quote-font: "Latin Modern Roman", "Latin Modern Roman 10", Times, "Times New Roman", 华文仿宋;
+	--quote-font-size: 10pt; /* 这里字体用了10pt,比正文字体稍大 */
+
+	/* 代码字体（代码中的中文会调用ui-font） */
+	--code-font: "Latin Modern Mono", "Latin Modern Mono 10";
+
+	/* 侧边栏字体 */
+	--ui-font: "阿里巴巴普惠体 2.0";
+
+	/* source mode 字体 */
+	--sourceMode-font: "SF Mono", "阿里巴巴普惠体 2.0"; /* 默认调用code-font和ui-font */
+
+	/* 目录字体 */
+	--toc-font: ""; /* 默认调用base-font */
+	--toc-font-size: ""; /* 默认调用base-font-size */
+
+	/* 表格字体 */
+	--table-title-font: ""; /* 默认调用heading-font */
+	--table-font: ""; /* 默认调用base-font */
+
+	/* 标题字体（总设置） */
+	--heading-Latin-font: var(--base-Latin-font); /* 默认调用base-font(bold) */
+	--heading-Chinese-font: 华文黑体;
+
+	/* 标题字体分别设置 */
+		/* 大标题（h1）字体 */
+		--title-Chinese-font: "华文黑体"; 
+		--title-font-size: 18pt;
+		/* h2字体 */
+		--h2-Chinese-font: 华文黑体; 
+		--h2-font-size: 14pt;
+		/* h3字体 */
+		--h3-Chinese-font: "华文黑体";
+		--h3-font-size: 12pt;
+		/* h4字体 */
+		--h4-Chinese-font: 华文楷体;
+		--h4-font-size: 10pt;
+		/* h5字体 */
+		--h5-Chinese-font: 华文仿宋;
+		--h5-font-size: 10pt;
+		/* h6字体 */
+		--h6-Chinese-font: 华文仿宋;
+		--h6-font-size: 9.5pt;
+
+	/* 粗体样式设置 */
+	--strong-weight: 900; /* 加粗风格时使用的字重；400等同于normal，700等同于bold，900等同于heavy */ 
+
+	/* 基础行距 */
+	--base-line-height: 16pt; 
+
+/* == 页面设置 == */
+	/* 打印页边距 */
+	--set-margin: 1.8cm 2cm 1.2cm 2cm !important;
+	/* 参阅 <https://github.com/Keldos-Li/typora-latex-theme/blob/main/README.md#特别注意> */
+
+/* == 控制设置 == */
+	/* 目录中是否显示一级标题 */
+	--toc-show-title: none; 
+}
+/* ============================================
+ * ============ TYPORA lATEX THEME ============
+ * ============================================
+ * THIS PROJECT IS BASED ON THE WORKS OF YFZHAO20 AND DU33169, 
+   WHOSE REPOSITORIES ARE ADRESSED ON 
+   <https://github.com/yfzhao20/Typora-markdown>
+   AND <https://github.com/du33169/typora-theme-essay_cn>,
+   MANY THANKS TO THEM.
+ * "TYPORA LATEX THEME" (MARKDOWN LATEX THEME)
+   IS A THEME FOR TYPORA (OR CSS FOR OTHER MARKDOWN EDITORS),
+   DESIGNED FOR CHINESE UNIVERSITY STUDENTS 
+   USED IN LATEX-STYLED ESSAYS OR EXPERIMENTAL REPORTS.
+ * COPYRIGHT (C) 2021 KELDOS; 
+   REPOSITORY ADDRESS: <https://github.com/Keldos-Li/typora-latex-theme>;
+   LISENCED UNDER GPL v3.0, SEE <https://github.com/Keldos-Li/typora-latex-theme/blob/main/LICENSE>
+ */
+
+/* LaTeX-light on Windows */
+
+@import "";
+
+body {
+    padding: 0 !important;
+    margin: 0 !important;
+    line-height: var(--base-line-height);
+    /*counter-reset: tableHead 0 imgHead 0;*/
+}
+
+/* 正文区基本属性 */
+#write {
+    font-family: var(--base-Latin-font), var(--base-Chinese-font), serif;
+    font-size: var(--base-font-size);
+    max-width: 21cm;/* A4标准宽度 */
+    background-color: white;
+    /* column-count: 2;
+    column-gap: 25px;
+    column-width: 8cm; 
+    display: inline-block; */
+    /* 这里可以试分栏的，但确实不适合实现 */
+}
+
+strong {
+    font-weight: var(--strong-weight);
+}
+
+@media screen {
+    #write {
+        padding: var(--set-margin);
+        /*border: 0.8px solid #AAC ; /* 添加一个淡蓝色的边框 */
+        box-shadow: 0 0 24px 12px #CCCCCC; /* 页边来一个阴影！！好耶 */
+    }
+}
+
+@media print {
+    #write {
+        padding: 0 !important;
+    }
+    #write a {
+        color: inherit;
+        text-decoration: none;
+    }
+    @page {
+        /* size: A4;  强制A4大小 */
+        margin: 1.8cm 2cm 1.2cm 2cm !important; /* 页边距在这里！！！！！！！！！！！！！！！！ */
+        /* 参阅 <https://github.com/Keldos-Li/typora-latex-theme/blob/main/README.md#特别注意> */
+    }
+}
+
+#write p {
+    text-align: left;
+}
+
+/*
+#write figure:after{
+  counter-increment: tableHead;
+  content: "表" counter(tableHead) " ";
+  text-align:center;
+  width:100%;
+  display:inline-block;
+}*/
+/* 图片，导出PDF时暂时无法显示 */
+/*
+#write .md-image:after{
+  counter-increment: imgHead;
+  content: "图" counter(imgHead) " ";
+  text-align:center;
+  width:100%;
+  display:inline-block;
+}
+*/
+
+/* basic样式采用一般的引言，具有左边框、左缩进 */
+blockquote {
+    font-style: normal;
+    font-family: var(--quote-font), var(--base-Latin-font), var(--base-Chinese-font), -apple-system, serif;
+    font-size: var(--quote-font-size);
+    border-left: 3px solid grey;
+    padding-left: 16px; /* 文字离左边框的距离 */
+    padding-right: 20pt;
+    margin-left: 20px; /* 左边框离页面边的距离 */
+    color: grey;
+}
+
+/*border-width: 0.5pt 0;
+  border-style:solid; 这一行本来使用了上下边框*/
+
+/* 标题属性 */
+#write h1,
+#write h2,
+#write h3,
+#write h4,
+#write h5,
+#write h6 {
+    font-weight: bold; /* 对 Windows 的修改 */
+    font-family: var(--heading-Latin-font), var(--heading-Chinese-font), sans-serif;
+    page-break-after: avoid !important;
+}
+
+#write h1 {
+    font-family: var(--heading-Latin-font), var(--title-Chinese-font), sans-serif;
+    /*font-weight: bold;*/
+    text-align: center;
+    column-span: all;
+    font-size: var(--title-font-size);
+}
+#write h2 {
+    font-family: var(--heading-Latin-font), var(--h2-Chinese-font), sans-serif;
+    font-size: var(--h2-font-size);
+}
+#write h3 {
+    font-family: var(--heading-Latin-font), var(--h3-Chinese-font), sans-serif;
+    font-size: var(--h3-font-size);
+    line-height: var(--h3-font-size);
+}
+#write h4 {
+    font-family: var(--heading-Latin-font), var(--h4-Chinese-font), sans-serif;
+    font-size: var(--h4-font-size);
+    line-height: var(--h4-font-size);
+}
+#write h5 {
+    font-family: var(--heading-Latin-font), var(--h5-Chinese-font), sans-serif;
+    font-size: var(--h5-font-size);
+    line-height: var(--h5-font-size);
+}
+#write h6 {
+    font-family: var(--heading-Latin-font), var(--h6-Chinese-font), sans-serif;
+    font-size: var(--h6-font-size);
+    line-height: var(--h5-font-size); /* 没有写错，为了避免行距太小才这么写 */
+}
+
+
+/* 三线表 */
+#write table {
+    border-top: 1.2pt solid; /* 三线表第一条线宽度 */
+    border-bottom: 1.2pt solid; /* 三线表第二条线宽度 */
+    font-family: var(--table-font), var(--base-Latin-font), var(--base-Chinese-font), serif;
+    /* font-size: var(--base-font-size); */
+    text-align: center;
+    page-break-inside: avoid;
+    border-spacing: 6px;
+    width: auto; /* 自动布局表格宽度，如果有时内容太紧建议直接加空格吧，我自己看不惯和页面等宽的大表格 */
+    margin: 0 auto; /* 使表格默认居中；虽然这个代码不好，但好像没别的实现办法 */
+}
+
+#write table td {
+    padding: 2px;
+}
+
+#write table tr {
+    padding: 2px;
+}
+
+#write th {
+    padding: 0px 6px;
+}
+
+/* 表格标题（首行）样式 */
+#write thead {
+    border-bottom: 0.5pt solid; /* 三线表表头的线 */
+    font-family: var(--table-title-font), var(--heading-Latin-font), var(--heading-Chinese-font), serif !important;
+    /* font-size: var(--base-font-size); */
+    font-weight: var(--strong-weight);
+}
+
+hr {
+  border-top: solid 0.7px #EEE;
+}
+
+img {
+    page-break-inside: avoid; /* 避免图片在导出时被断开 */
+}
+
+/* ============ 多级列表样式 ============ */
+ul {
+    list-style: disc; /* 无序列表第一级：实心圆点 */
+}
+
+ul ul {
+    /*list-style: circle;*/
+    list-style: '–　 '; /* 直接用空格代替一部分缩进的调整了我真懒 */
+    /*left: -0.8em;*/
+}
+
+ul ul ul {
+    list-style: "◦　  "; /* 无序列表第三极：小圈 */
+    left: 0.6em;
+}
+
+ol {
+    list-style: decimal;
+    /* 有序列表第一级：数字 */
+}
+
+ol ol {
+    counter-reset: liist;
+    list-style: none;
+}
+ol ol li {
+    counter-increment: liist;
+    position: relative;
+}
+ol ol li::before {
+    content: "("counter(liist, lower-alpha) ")　　"; /* 有序列表第二级：括号加小写字母 */
+    position: absolute;
+    margin-right: 2rem;
+    left: -2.4em;
+}
+
+ol ol ol {
+    counter-reset: liiist;
+    list-style: none;
+    margin: 0;
+}
+ol ol ol li {
+    counter-increment: liiist;
+    position: relative;
+}
+ol ol ol li::before {
+    content: counter(liiist, lower-roman) ".　　　"; /* 有序列表第三级：小写罗马数字 这些后续还要改的可恶*/
+    align-self: flex-end;
+    position: absolute;
+    left: -2.4em;
+    /* -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;*/
+    width: 4em; /* 为了让项目编号是重新用句点对齐而不是左对齐我调试了一整个晚上啊啊啊啊 CSS好难写 */
+    text-align: right;
+}
+
+li {
+    position: relative;
+}
+/* ============ 多级列表样式END ============ */
+
+
+/* 行内代码 */
+p code,
+li code {
+    color: rgb(60, 112, 198);
+    background-color: #fefefe;
+    font-family: var(--code-font), var(--ui-font), monospace;
+    box-sizing: border-box;
+    border-right: 0px;
+    margin: 0 2px 0 2px;
+    padding: 0 2px 0 2px;
+    border-radius: 2px 2px 2px 2px; /* 圆角 */
+    box-shadow: 0 0 1px 1px #c8d3df; /* 阴影 */
+}
+
+/* 代码块样式*/
+#write .CodeMirror-wrap {
+    padding: 10px; /* 当代码太长跨页的时候好像也会有点问题，到时候再改 */
+}
+
+#write .CodeMirror-code pre {
+    font-family: var(--code-font), var(--ui-font), monospace;
+}
+
+/* typora 编写模式 */
+#typora-source {
+    font-family: var(--sourceMode-font), var(--code-font), var(--ui-font), monospace;
+    line-height: 2rem;
+}
+
+/* 下面是标题自动编号，初始化计数器。使用多级编号，编号后加空格模仿LaTeX */
+/* 首先全局进行一次reset，这样即使不添加h1标题也可以使用较低级别的标题 */
+#write {
+    counter-reset: h2 0 h3 0 h4 0 h5 0 h6 0
+}
+
+#write h1 {
+    counter-reset: h2
+}
+h2 {
+    counter-reset: h3
+}
+h3 {
+    counter-reset: h4
+}
+h4 {
+    counter-reset: h5
+}
+h5 {
+    counter-reset: h6
+}
+
+/* put counter result into headings */
+#write h2:before {
+    counter-increment: h2;
+    content: counter(h2);
+    margin-right: 2rem;
+}
+/** override the default style for focused headings */
+#write h3:before,
+h3.md-focus.md-heading:before {
+    counter-increment: h3;
+    content: counter(h2) "."counter(h3);
+    margin-right: 2rem;
+}
+#write h4:before,
+h4.md-focus.md-heading:before {
+    counter-increment: h4;
+    content: counter(h2) "."counter(h3) "."counter(h4);
+    margin-right: 2rem;
+}
+#write h5:before,
+h5.md-focus.md-heading:before {
+    counter-increment: h5;
+    content: counter(h2) "."counter(h3) "."counter(h4) "."counter(h5);
+    margin-right: 2rem;
+}
+#write h6:before,
+h6.md-focus.md-heading:before {
+    counter-increment: h6;
+    content: counter(h2) "."counter(h3) "."counter(h4) "."counter(h5) "."counter(h6);
+    margin-right: 2rem;
+}
+
+/* 目录 */
+.md-toc-content {
+    margin-left: 2em;
+    counter-reset: toc-h2 toc-h3 toc-h4; /* 修复缺失上级标题时无法递增 */
+    page-break-after: always;
+}
+.md-toc-inner {
+    margin-left: 0 !important;
+    color: black !important;
+}
+.md-toc-item {
+    color: black !important;
+}
+
+/* 目录标题内容属性 */
+.md-toc-h2,
+.md-toc-h3,
+.md-toc-h4,
+.md-toc-h5,
+.md-toc-h6 {
+    font-size: var(--toc-font-size);
+    font-family: var(--toc-font), var(--base-Latin-font), var(--base-Chinese-font), serif;
+}
+.md-toc-h2 {
+    font-weight: var(--strong-weight);
+}
+
+/* 目录标题前 */
+.md-toc-content .md-toc-h1 {
+    display: var(--toc-show-title);
+    counter-reset: toc-h2;
+}
+.md-toc-content .md-toc-h2 {
+    counter-reset: toc-h3;
+}
+.md-toc-content .md-toc-h3 {
+    counter-reset: toc-h4;
+}
+.md-toc-content .md-toc-h4 {
+    counter-reset: toc-h5;
+}
+.md-toc-content .md-toc-h5 {
+    counter-reset: toc-h6;
+}
+.md-toc-content .md-toc-h2:before {
+    counter-increment: toc-h2;
+    content: counter(toc-h2);
+    margin-right: 1rem;
+    font-weight: var(--strong-weight);
+}
+.md-toc-content .md-toc-h3:before {
+    counter-increment: toc-h3;
+    content: counter(toc-h2) "."counter(toc-h3);
+    margin-left: 1.5rem;
+    margin-right: 0.5rem;
+}
+.md-toc-content .md-toc-h4:before {
+    counter-increment: toc-h4;
+    content: counter(toc-h2) "."counter(toc-h3) "."counter(toc-h4);
+    margin-left: 3.5rem;
+    margin-right: 0.5rem;
+}
+.md-toc-content .md-toc-h5:before {
+    counter-increment: toc-h5;
+    content: counter(toc-h2) "."counter(toc-h3) "."counter(toc-h4) "."counter(toc-h5);
+    margin-left: 5.5rem;
+    margin-right: 0.5rem;
+}
+.md-toc-content .md-toc-h6:before {
+    counter-increment: toc-h6;
+    content: counter(toc-h2) "."counter(toc-h3) "."counter(toc-h4) "."counter(toc-h5) "."counter(toc-h6);
+    margin-left: 7.5rem;
+    margin-right: 0.5rem;
+}
+
+/* 侧边大纲标题 */
+.sidebar-content .outline-h1 {
+    counter-reset: outline-h2;
+}
+.sidebar-content .outline-h2 {
+    counter-reset: outline-h3;
+}
+.sidebar-content .outline-h3 {
+    counter-reset: outline-h4;
+}
+.sidebar-content .outline-h4 {
+    counter-reset: outline-h5;
+}
+.sidebar-content .outline-h5 {
+    counter-reset: outline-h6;
+}
+.sidebar-content .outline-h2 .outline-label:before {
+    counter-increment: outline-h2;
+    content: counter(outline-h2) " ";
+}
+.sidebar-content .outline-h3 .outline-label:before {
+    counter-increment: outline-h3;
+    content: counter(outline-h2) "."counter(outline-h3) "  ";
+}
+.sidebar-content .outline-h4 .outline-label:before {
+    counter-increment: outline-h4;
+    content: counter(outline-h2) "."counter(outline-h3) "."counter(outline-h4) "  ";
+}
+.sidebar-content .outline-h5 .outline-label:before {
+    counter-increment: outline-h5;
+    content: counter(outline-h2) "."counter(outline-h3) "."counter(outline-h4) "."counter(outline-h5) "  ";
+}
+
+.sidebar-content {
+    font-family: var(--ui-font); /* 侧边栏的字体修改 */
+    list-style: none;
+}
+
+/* 元数据（如YAML front matter）的背景框 */
+pre.md-meta-block {
+    background: #CCCCCC;
+    padding: 1.4em;
+    font-family: var(--code-font), var(--ui-font), monospace;
+}
+
+/** override the default style for focused headings */
+#write>h3.md-focus:before,
+#write>h4.md-focus:before,
+#write>h5.md-focus:before,
+#write>h6.md-focus:before,
+h3.md-focus:before,
+h4.md-focus:before,
+h5.md-focus:before,
+h6.md-focus:before {
+    color: inherit;
+    border: inherit;
+    border-radius: inherit;
+    position: inherit;
+    left: initial;
+    float: none;
+    top: initial;
+    font-size: inherit;
+    padding-left: inherit;
+    padding-right: inherit;
+    vertical-align: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+}
+
+
+</style>
+</head>
+<body class='typora-export os-windows'>
+<div id='write'  class=' first-line-indent'><p>&nbsp;</p><h1><a name="软件工程" class="md-header-anchor"></a><span>软件工程</span></h1><h2><a name="定义" class="md-header-anchor"></a><span>定义</span></h2><p><span>1）应用系统的、规范的、可量化的方法来开发、运行和维护软件，即将工程应用到软件。</span></p><p><span>2）对1)中各种方法的研究。</span></p><h2><a name="软件生命周期模型" class="md-header-anchor"></a><span>软件生命周期模型</span></h2><p><img src="概念性章节.assets/image-20210626004639571.png" alt="image-20210626004639571" style="zoom: 80%;" /></p><h2><a name="软件过程模型" class="md-header-anchor"></a><span>软件过程模型</span></h2><p><img src="概念性章节.assets/image-20210626004703323.png" referrerpolicy="no-referrer" alt="image-20210626004703323"></p><h2><a name="软件演化生命周期模型" class="md-header-anchor"></a><span>软件演化生命周期模型</span></h2><p><span>人们将软件从</span><strong><span>生产到报废</span></strong><span>的生命周期分割为不同阶段，每段阶段有明确的典型输入/输出、主要活动和执行人，各个阶段形成明确、连续的顺次过程，这些阶段划分就被称为软件生命周期模型。</span></p><h3><a name="步骤" class="md-header-anchor"></a><span>步骤</span></h3><ol><li><span>初始开发</span></li><li><span>演化</span></li><li><span>服务</span></li><li><span>逐步淘汰</span></li><li><span>停止</span></li></ol><h3><a name="优点" class="md-header-anchor"></a><span>优点：</span></h3><ul><li><span>使用了迭代式开发，具有更好的适用性、尤其是其演化式迭代安排能够适用于那些需求变更比较频繁或不确定性较多的软件系统的开发</span></li><li><span>并行开发可以帮助缩短软件产品的开发时间</span></li><li><span>渐进交互可以加强用户反馈，降低开发风险</span></li></ul><h3><a name="缺点" class="md-header-anchor"></a><span>缺点：</span></h3><ul><li><span>无法在项目早期阶段确定项目范围，所以项目的整体计划、进度调度、尤其是商务协商事宜无法准确把握</span></li><li><span>后续迭代的开发活动是在前导迭代的基础上进行修改和扩展的，这容易让后续迭代忽略分析与设计工作，蜕变为构建——修复方式</span></li><li><span>如果缺乏过程管理，可能会陷入试——错——改的循环</span></li></ul><p><img src="概念性章节.assets/image-20210626004536645.png" referrerpolicy="no-referrer" alt="image-20210626004536645"></p><blockquote><p><span>以下是具体的演化模型</span></p></blockquote><h2><a name="构建-修补模型" class="md-header-anchor"></a><span>构建-修补模型</span></h2><p><span>最早也是最自然产生的软件开发模型，对软件开发活动没有任何规划和组织，是完全依靠开发人员个人能力进行软件开发的方式。</span></p><p><img src="概念性章节.assets/5-1624637785387.png" style="zoom:80%;" /></p><h3><a name="缺点-n2478" class="md-header-anchor"></a><span>缺点</span></h3><ol><li><span>在这种模型中，没有对开发工作进行规范和组织，所以随着软件系统的</span><strong><span>复杂度提升</span></strong><span>，开发活动会超出个人的直接控制能力，构建-修复模型就会导致开发活动无法有效进行而失败；</span></li><li><span>没有分析</span><strong><span>需求的真实性</span></strong><span>，给软件开发带来很大的风险；</span></li><li><span>没有考虑</span><strong><span>软件结构的质量</span></strong><span>，使得软件结构在不断的修改中变得质量越来越糟，直至无法修改；</span></li><li><span>没有考虑测试和程序的可维护性，也没有任何文档，软件的维护十分困难。</span></li></ol><p><span>适用于软件规模很小的软件。</span></p><h2><a name="瀑布模型" class="md-header-anchor"></a><span>瀑布模型</span></h2><p><img src="概念性章节.assets/image-20210626004259612.png" referrerpolicy="no-referrer" alt="image-20210626004259612"></p><p><span>瀑布模型是按照软件生命周期模型将软件开发活动组织为需求开发、软件设计、软件实现、软件测试、软件交付和软件维护等活动，并且规定了它们自上而下、相互邻接的次序。</span></p><h3><a name="优点-n2495" class="md-header-anchor"></a><span>优点</span></h3><p><span>为软件开发活动定义了清晰的阶段划分(包括输入/输出、主要工作及其关注点)，这让开发者能够以关注点分离的方式更好地进行那些复杂度超越个人能力的软件项目的开发活动。</span></p><h3><a name="缺点-n2497" class="md-header-anchor"></a><span>缺点</span></h3><ol><li><span>对文档的过高的期望具有局限性</span></li><li><span>对开发活动的线性顺序假设具有局限性</span></li><li><span>客户、用户的参与具有局限性：成功的项目开发需要客户、用户从始至终的参与，而不仅仅是一个阶段。</span></li><li><span>里程碑粒度具有局限性：里程碑粒度过粗，基本丧失了&quot;早发现缺陷早修复&quot;这一思想</span></li></ol><p><span>适用于比较成熟，没有技术难点的软件。</span></p><p><img src="概念性章节.assets/7.png" referrerpolicy="no-referrer"></p><h2><a name="增量迭代模型需求驱动）" class="md-header-anchor"></a><span>增量迭代模型（需求驱动)）</span></h2><p><span>增量迭代模型是在项目开始时，通过系统需求开发和核心体系结构设计活动完成项目对前景和范围的界定，然后再将后续开发活动组织为多个迭代、并行的瀑布式开发模型。需求驱动。</span></p><p><span>少量的不确定性和影响不大的需求变更通过迭代的方式加以解决 </span></p><h3><a name="优点-n2522" class="md-header-anchor"></a><span>优点</span></h3><ol><li><span>迭代式开发更加符合软件开发的实践情况，具有更好的适用性；</span></li><li><span>并行开发可以帮助缩短软件产品的开发时间；</span></li><li><span>渐进交付可以加强用户反馈，降低开发风险。</span></li></ol><h3><a name="缺点-n2531" class="md-header-anchor"></a><span>缺点</span></h3><ol><li><span>由于各个构件是逐渐并入已有的软件体系结构中的，所以加入构件必须不破坏已构造好的系统部分，这需要软件具备开放式的体系结构。</span></li><li><span>增量交付模型需要一个完备、清晰的项目前景和范围以进行并发开发规划，但是在一些不稳定的领域，不确定性太多或者需求变化非常频繁，很难在项目开始就确定前景和范围。</span></li></ol><p><span>适用于大规模软件系统的开发。</span></p><h2><a name="演化模型" class="md-header-anchor"></a><span>演化模型</span></h2><p><img src="概念性章节.assets/8.png" referrerpolicy="no-referrer"></p><p><span>演化模型将软件开发活动组织为多个迭代、并行的瀑布式开发活动。演化模型能够更好地应对需求变更，更适用于需求变更比较频繁或不确定性较多的领域</span></p><h3><a name="优点-n2547" class="md-header-anchor"></a><span>优点</span></h3><ol><li><strong><span>使用了迭代式开发，具有更好的适用性</span></strong><span>，尤其是其演化式迭代安排能够适用于那些需求变更比较频繁或不确定性较多的软件系统的开发；</span></li><li><span>并行开发可以帮助</span><strong><span>缩短</span></strong><span>软件产品的开发时间；</span></li><li><span>渐进交付可以</span><strong><span>加强用户反馈</span></strong><span>，降低开发风险。</span></li></ol><h3><a name="缺点-n2556" class="md-header-anchor"></a><span>缺点</span></h3><ol><li><span>无法在项目早期阶段建立项目范围，所以项目的整体计划、进度调度、尤其是商务协商事宜无法准确把握；</span></li><li><span>后续迭代的开发活动是在前导迭代基础上进行修改和扩展的，这容易让后续迭代忽略设分析与设计工作，蜕变为构建-修复方式。</span></li></ol><p><span>适用与不稳定领域的大规模软件系统开发</span></p><h2><a name="原型模型" class="md-header-anchor"></a><span>原型模型</span></h2><p><img src="概念性章节.assets/9.png" referrerpolicy="no-referrer"></p><p><span>原型模型将需求开发活动展开为抛弃式原型开发活动和演化式原型开发活动。原型模型在整体安排迭代的情况下，强调&quot;</span><strong><span>抛弃式原型</span></strong><span>&quot;的演化模型。抛弃式原型解决对未来知识的局限性产生的</span><strong><span>不确定性</span></strong><span>，将未来置于现在进行推敲。</span></p><h3><a name="抛弃式原型" class="md-header-anchor"></a><span>抛弃式原型</span></h3><ol><li><span>它通过模拟&quot;未来&quot;的产品，将&quot;未来&quot;的知识置于&quot;现在&quot; 进行推敲，解决不确定性。</span></li><li><span>存在的原因是&quot;不确定的&quot;，这一类原型在后续的开发过程中会被抛弃</span></li></ol><h3><a name="演化式原型" class="md-header-anchor"></a><span>演化式原型</span></h3><ol><li><span>在迭代中构建，是系统的核心，并不断扩充，最终成为真正的软件产品。</span></li><li><span>它将作为真正产品的一部分，所以必须有很好的质量。在迭代式开发中，通常会在第一个迭代中构建一个核心的体系结构演化式原型，并且在后续迭代中不断扩充，成为真正的软件产品。</span></li></ol><h3><a name="优点-n2586" class="md-header-anchor"></a><span>优点：</span></h3><ol><li><span>对原型方法的使用加强了与客户、用户的交流，可以让最终产品取得更好的满意度；</span></li><li><span>适用于非常新颖的领域，这些领域因为新颖所以有着大量的不确定性。</span></li></ol><h3><a name="缺点-n2593" class="md-header-anchor"></a><span>缺点</span></h3><ol><li><span>原型方法能够解决风险，但是自身也能带来新的风险，例如原型开发的成本较高，可能会耗尽项目的费用和时间；</span></li><li><span>实践中，很多项目负责人不舍得抛弃&quot;抛弃式原型&quot;，使得质量较差的代码进入了最终产品，导致了最终产品的低质量。</span></li></ol><p><span>适用于具有大量不确定的新颖领域进行开发活动组织。</span></p><h2><a name="螺旋模型" class="md-header-anchor"></a><span>螺旋模型</span></h2><p><span>螺旋模型是风险驱动的，完全按照风险解决的方式组织软件开发活动。</span></p><p><img src="概念性章节.assets/10.png" referrerpolicy="no-referrer"></p><h3><a name="过程" class="md-header-anchor"></a><span>过程</span></h3><ol><li><span>确定目标、解决方案和约束</span></li><li><span>评估方案，发现风险</span></li><li><span>寻找风险解决方法</span></li><li><span>落实风险解决方案</span></li><li><span>计划下一个迭代</span></li></ol><h3><a name="意义" class="md-header-anchor"></a><span>意义</span></h3><p><span>自内向外，螺旋模型有4次风险解决迭代，分别解决了几个高风险的阶段的问题</span></p><ol><li><span>解决系统需求开发中的风险，尤其是产品概念设计风险，得到一个确定的产品前景和范围。</span></li><li><span>解决软件需求开发中的风险，得到清晰的软件需求</span></li><li><span>解决软件体系结构设计中的技术风险，构建高质量的核心体系结构原型。</span></li><li><span>解决详细设计和实现中的关键技术风险，建立一个可实现的高质量软件结构。</span></li></ol><h3><a name="优点-n2631" class="md-header-anchor"></a><span>优点</span></h3><p><span>可以降低风险，减少项目因风险造成的损失</span></p><h3><a name="缺点-n2633" class="md-header-anchor"></a><span>缺点</span></h3><ol><li><span>风险解决需要使用原型手段，也就会存在原型自身带来的风险，这一点与原型模型相同；</span></li><li><span>模型过于复杂，不利于管理者依据其组织软件开发活动</span></li></ol><ol><li><span>适用于高风险的大规模软件系统开发</span></li></ol><h2><a name="rup模型" class="md-header-anchor"></a><span>RUP模型</span></h2><p><span>统一过程(Rational Unified Process，RUP)总结和借鉴传统上的各种有效经验，建立最佳实践方法的集合，并提供有效的过程定制手段，允许开发者根据特定的需要定制一个有效的过程模型。</span></p><p><img src="概念性章节.assets/11.png" referrerpolicy="no-referrer"></p><h3><a name="实践方法" class="md-header-anchor"></a><span>实践方法</span></h3><ol><li><span>迭代式开发，这是过去被反复证明的最佳实践方法；</span></li><li><span>管理需求，重视需求工程中除了需求开发之外的需求管理活动；</span></li><li><span>使用基于组件的体系结构，它帮助建立一个可维护、易开发、易复用的软件体系结构；</span></li><li><span>可视化建模，利用UML进行建模；</span></li><li><span>验证软件质量，尽早和持续地开展验证，以尽早发现缺陷，降低风险和成本；</span></li><li><span>控制软件变更，适应1990s以后需求变更越来越重要的事实。</span></li></ol><h3><a name="优点-n2664" class="md-header-anchor"></a><span>优点</span></h3><ol><li><span>吸收和借鉴了传统上的最佳实践方法，尤其是其核心的6个实践方法，能够保证软件开发过程的组织是基本有效和合理的。</span></li><li><span>RUP依据其定制机制的不同，可以适用于小型项目，也可以适用于大型项目的开发，适用面广泛。</span></li><li><span>RUP有一套软件工程工具的支持，这可以帮助RUP的有效实施。</span></li></ol><h3><a name="缺点-n2673" class="md-header-anchor"></a><span>缺点</span></h3><ol><li><span>没有考虑交付之后的软件维护问题</span></li><li><span>裁剪和配置工作不是一个简单的任务，无法保证每个项目都能定制一个有效的RUP过程。</span></li></ol><p><span>适用：RUP是重量级过程，能够胜任大型软件团队开发大型项目时的活动组织。但RUP经过裁剪和定制，也可以变为轻量级过程，也能够胜任小团队的开发活动组织。</span></p><h2><a name="敏捷模型xp" class="md-header-anchor"></a><span>敏捷模型(XP)</span></h2><p><span>最为重要的敏捷思想是敏捷联盟宣言所声明的价值观：</span></p><ol><li><span>个体和互动 </span><mark><span>高于</span></mark><span> 流程和工具</span></li><li><span>工作的软件 </span><mark><span>高于</span></mark><span> 详尽的文档</span></li><li><span>客户合作 </span><mark><span>高于</span></mark><span> 合同谈判</span></li><li><span>响应变化 </span><mark><span>高于</span></mark><span> 遵循计划</span></li></ol><p><span>极限编程，就是什么最有效果就做什么。</span></p><p><span>适用于快速变化或者时间压力较大的项目。</span></p><h2><a name="逆向工程" class="md-header-anchor"></a><span>逆向工程</span></h2><p><span>逆向工程技术是指：&quot;分析目标系统，标识系统的部件及其交互关系，并且使用其它形式或者更高层的抽象创建系统表现的过程[Chikofsky1990]&quot;。</span></p><p><span>处理遗留软件时，维护人员接受的维护对象可能是一个没有任何文档也没有程序源代码的软件程序，此时，维护人员需要使用逆向工程技术。</span></p><p><span>逆向工程的基本原理是抽取软件系统的需求与设计而隐藏实现细节，然后在需求与设计的层次上描述软件系统，以建立对系统更加准确和清晰的理解。</span></p><p><img src="概念性章节.assets/image-20210626004604335.png" referrerpolicy="no-referrer" alt="image-20210626004604335"></p><h2><a name="再工程" class="md-header-anchor"></a><span>再工程</span></h2><p><span>[Arnold1993]认为再工程主要是下列两类活动：</span></p><ol><li><span>改进人们对软件的理解</span></li><li><span>改进软件自身，通常是提高其可维护性、可复用性和可演化性</span></li></ol><p><span>常见的具体活动有</span></p><ol><li><span>重新文档化</span></li><li><span>重组系统的结构</span></li><li><span>将系统转换为更新的编程语言</span></li><li><span>修改数据的结构组织。</span></li></ol><p><span>是抽象出来一个视图，然后完全重新开始开发，而不是基于逆向工程得到的结果进行再工程。</span></p><p><img src="概念性章节.assets/image-20210626004618972.png" referrerpolicy="no-referrer" alt="image-20210626004618972"></p><h1><a name="五十年代到00年代的特点" class="md-header-anchor"></a><span>五十年代到00年代的特点</span></h1><h2><a name="1950s" class="md-header-anchor"></a><span>1950s</span></h2><p><span>科学计算；以机器为中心进行编程；像生产硬件一样生产软件。</span></p><h2><a name="1960s" class="md-header-anchor"></a><span>1960s</span></h2><p><span>业务应用(批量数据处理和事物计算)；软件不同于硬件；用软件工艺的方式生产软件。</span></p><h2><a name="1970s" class="md-header-anchor"></a><span>1970s</span></h2><p><span>结构化方法；瀑布模型；强调规则和纪律。它们奠定了软件工程的基础，是后续年代软件工程发展的支撑。</span></p><h2><a name="1980s" class="md-header-anchor"></a><span>1980s</span></h2><p><span>追求生产力最大化；现代结构化方法/面向对象编程广泛应用；重视过程的作用。</span></p><h2><a name="1990s" class="md-header-anchor"></a><span>1990s</span></h2><p><span>企业为中心的大规模软件系统开发；追求快速开发、可变更性和用户价值；web应用出现</span></p><h2><a name="2000s" class="md-header-anchor"></a><span>2000s</span></h2><p><span>大规模web应用；大量面向大众的web产品；追求快速开发、可变更性、用户价值和创新。</span></p><p><img src="概念性章节.assets/5.png" referrerpolicy="no-referrer"></p><h1><a name="团队" class="md-header-anchor"></a><span>团队</span></h1><h2><a name="分类" class="md-header-anchor"></a><span>分类</span></h2><ol><li><span>主程序员团队</span></li><li><span>民主团队</span></li><li><span>开放团队</span></li></ol><h2><a name="团队建设" class="md-header-anchor"></a><span> 团队建设</span></h2><ol><li><p><span>建立团队章程</span></p></li><li><p><span>持续成功</span></p></li><li><p><span>和谐沟通</span></p></li><li><p><span>不断总结</span></p></li><li><p><span>避免团队杀手</span></p><ol><li><span>防范式管理</span></li><li><span>官僚主义</span></li><li><span>地理分布：异地办公</span></li><li><span>时间分割：保证全天候有人在</span></li><li><span>产品质量的降低</span></li><li><span>虚假的最后期限</span></li><li><span>小圈子管理</span></li></ol></li></ol><h1><a name="质量保障" class="md-header-anchor"></a><span>质量保障</span></h1><h2><a name="措施" class="md-header-anchor"></a><span>措施</span></h2><ol><li><code>需求开发</code><span>：需求评审和需求度量；</span></li><li><code>体系结构</code><span>：体系结构评审和集成测试(持续集成)；</span></li><li><code>详细设计</code><span>：详细设计评审、设计度量和集成测试(持续集成)；</span></li><li><code>构造阶段</code><span>：代码评审、代码度量、测试(测试驱动和持续集成)；</span></li><li><code>测试阶段</code><span>：测试、测试度量。</span></li><li><code>要及时的根据保障计划进行质量验证</code><span>，质量验证的方法主要有</span><strong><span>评审</span></strong><span>、</span><strong><span>测试</span></strong><span>和</span><strong><span>质量度量</span></strong><span>三种。</span></li></ol><h1><a name="配置管理" class="md-header-anchor"></a><span>配置管理</span></h1><ol><li><code>标识配置项</code><span>：确定应该被保留的部分，并且给予他们确定标识，包含配置项的特征，包括生产者、基线建立时间、使用者等。</span></li><li><code>版本管理</code><span>：极其重要</span></li><li><code>变更控制</code><span>：变更请求表单，教材61页</span></li><li><code>配置审计</code><span>：验证配置项的完整性、正确性、一致性和可追踪性。</span></li><li><code>状态报告</code><span>：反映当前的配置状态。</span></li><li><code>软件发布管理</code><span>：将配置项发布到开发活动之外，例如发布给客户。</span></li></ol><h1><a name="代码改进" class="md-header-anchor"></a><span>代码改进</span></h1><h2><a name="基本要素" class="md-header-anchor"></a><span>基本要素</span></h2><ul><li><span>简洁性/可维护性</span></li></ul><ul><li><span>使⽤数据结构消减复杂判定</span></li></ul><ul><li><span>控制结构</span></li></ul><ul><li><span>变量使⽤</span></li></ul><ul><li><span>语句处理</span></li></ul><ul><li><span>How to write unmaintainable code</span></li></ul><ul><li><span>防御与错误处理</span></li></ul><h2><a name="契约式编程" class="md-header-anchor"></a><span>契约式编程</span></h2><ol><li><span>使用异常或断言的方式检查</span></li><li><span>检查中间的过程</span></li></ol><h2><a name="防御式编程" class="md-header-anchor"></a><span>防御式编程</span></h2><ol><li><span>前置和后置方法</span></li></ol><p><img src="概念性章节.assets/23.png" referrerpolicy="no-referrer"></p><h2><a name="代码复杂度" class="md-header-anchor"></a><span>代码复杂度</span></h2><p><img src="概念性章节.assets/34.png" referrerpolicy="no-referrer">
+<img src="概念性章节.assets/35.png" referrerpolicy="no-referrer"></p><h1><a name="软件维护" class="md-header-anchor"></a><span> 软件维护</span></h1><blockquote><p><span>软件维护是在交付之后修改软件系统或其部件的活动过程，以修正缺陷、提高性能或其他属性、适应变化的环境。</span></p></blockquote><h2><a name="重要性" class="md-header-anchor"></a><span>重要性</span></h2><ol><li><span>主要是为了保证产品的正常运转而进行使用帮助、故障解决和磨损处理等工作。</span></li><li><span>软件维护是在交付之后修改软件系统或其部件的活动过程，以修正缺陷、提高性能或其他属性、适应变化的环境。问题、环境发生了改变，软件产品中存在缺陷。</span></li><li><span>软件的维护主要是&quot;修改&quot;。软件不会磨损，软件维护只需要完成少量的使用帮助、故障解决和磨损处理等工作，软件特性上是易于修改的，软件只有持续修改才能保持价值。</span></li></ol><h2><a name="方法" class="md-header-anchor"></a><span>方法</span></h2><ol><li><span>前期(开发阶段)更充分的准备可以减轻后期维护的压力与困难</span></li><li><span>考虑到软件的可变更性进行开发</span></li></ol><h2><a name="过程-n225" class="md-header-anchor"></a><span>过程</span></h2><ol><li><span>问题/修改的标识、分类与划分优先级</span></li><li><span>分析</span></li><li><span>设计</span></li><li><span>实现</span></li><li><span>回归测试：修改后不会影响</span></li><li><span>验收测试</span></li><li><span>移交</span></li></ol><h2><a name="用户文档和系统文档" class="md-header-anchor"></a><span>用户文档和系统文档</span></h2><h3><a name="用户文档" class="md-header-anchor"></a><span>用户文档</span></h3><ol><li><span>用户文档是指为用户编写参考指南或者操作教程，常见的如用户使用手册、联机帮助文档等，统称为用户文档。</span></li><li><span>文档内容的组织应当支持其使用模式，常见的是指导模式和参考模式两种。</span></li></ol><h4><a name="要素" class="md-header-anchor"></a><span>要素</span></h4><ol><li><p><span>标识信息</span></p><ol><li><span>包括文档标题、文档产生的版本和日期、相关的软件 产品和版本</span></li><li><span>标识信息应该放在包装袋或者封面，用户可以不用翻阅文档就能看到</span></li></ol></li><li><p><span>引言</span></p><ol><li><span>正文的第一部分，描述文档的预期读者、描述范围，以及对文档目的、功能和操作环境的概要描述</span></li></ol></li><li><p><span>文档使用信息</span></p><ol><li><span>文档使用信息描述了关于文档的使用信息，例如，解释各种图示的含义、介绍如何使用帮助等。</span></li></ol></li><li><p><span>操作模式</span></p><ol><li><span>操作模式是使用用户文档的模式，例如对操作流程的图示或者文字性描述，再例如解释操作的理论、原因、算法或者通用概念。</span></li></ol></li><li><p><span>操作规程</span></p><ol><li><p><span>指导模式文档应该包括很多软件功能都会涉及的常见活动规程：</span></p><ol><li><span>需要由用户执行的软件安装与卸载</span></li><li><span>图形用户界面特性的使用指导</span></li><li><span>访问、登录或者关闭软件</span></li><li><span>通过软件的导航，访问和退出相关功能</span></li><li><span>数据操作(输入、保存、读取、打印、更新和删除)</span></li><li><span>取消、中断和重启操作的方法</span></li></ol></li><li><p><span>对于完成用户任务的操作流程，指导模式文档应该从基本信息、指导步骤和结束信息三个方面来描述</span></p></li><li><p><span>基本信息：</span></p><ol><li><span>简要概述操作规程的目的，定义或解释必要的概念</span></li><li><span>标明执行任务前需要完成的技术活动</span></li><li><span>列举用户完成任务所需要的资源情况，例如数据、文档、密码等</span></li></ol></li><li><p><span>对于完成用户任务的操作流程，指导模式文档应该从基本信息、指导步骤和结束信息三个方面来描述</span></p></li><li><p><span>指导步骤：使用祈使语句描述用户行为，并指出预期的结果。指导步骤要说明：</span></p><ol><li><span>用户输入数据的域值范围、最大长度和格式</span></li><li><span>相应的错误消息和恢复办法</span></li><li><span>其它可选的步骤和重复步骤</span></li></ol></li><li><p><span>对于完成用户任务的操作流程，指导模式文档应该从基本信息、指导步骤和结束信息三个方面来描述</span></p></li><li><p><span>结束信息：标明操作规程的最后步骤，让用户知道怎样判断整个操作规程的成功完成，告诉用户如何退出操作规程</span></p></li></ol></li><li><p><span>软件命令信息</span></p><ol><li><span>解释用户输入命令的格式和操作规程，包括必要参数、可选参数、缺省值等，要示例说明命令的使用，说明怎样判断命令是成功完成还是异常中止</span></li></ol></li><li><p><span>错误信息与问题解决</span></p><ol><li><span>文档要详细描述软件使用中的已知问题，让用户清楚如何自行解决问题或者怎样向技术支持人员报告准确的信息</span></li></ol></li><li><p><span>导航特征</span></p><ol><li><span>包括章节、主题、页码、链接、图标等</span></li><li><span>提高导航特征和效率</span></li></ol></li></ol><h3><a name="系统文档" class="md-header-anchor"></a><span>系统文档</span></h3><p><span>与用户文档注重系统使用细节不同，系统管理员文档更注重系统维护方面的内容，例如系统性能调整、访问权限控制、常见故障解决等等。因此，系统管理员文档需要详细介绍软硬件的配置方式、网络连接方式、安全验证与访问授权方法、备份与容灾方法、部件替换方法等等。</span></p><p>&nbsp;</p></div>
+</body>
+</html>

@@ -1,0 +1,727 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>构造与测试</title><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 40px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  html.blink-to-pdf { font-size: 13px; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
+.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; overflow-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none 0s ease 0s; }
+.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; margin-top: 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+svg[id^="mermaidChart"] { line-height: 1em; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+
+
+/* ============================================
+ * ============ TYPORA lATEX THEME ============
+ * ============================================
+ */
+
+/* userCustom on Windows */
+
+:root {
+
+/* == 字体设置 == */
+
+	/* 基准字体 */
+	--base-Latin-font: "Latin Modern Roman", "Latin Modern Roman 10"; /* 备选：Times, "Times New Roman" */
+	--base-Chinese-font: 宋体-简, 华文宋体;
+	--base-font-size: 9.5pt;
+
+	/* 引言字体 */
+	--quote-font: "Latin Modern Roman", "Latin Modern Roman 10", Times, "Times New Roman", 华文仿宋;
+	--quote-font-size: 10pt; /* 这里字体用了10pt,比正文字体稍大 */
+
+	/* 代码字体（代码中的中文会调用ui-font） */
+	--code-font: "Latin Modern Mono", "Latin Modern Mono 10";
+
+	/* 侧边栏字体 */
+	--ui-font: "阿里巴巴普惠体 2.0";
+
+	/* source mode 字体 */
+	--sourceMode-font: "SF Mono", "阿里巴巴普惠体 2.0"; /* 默认调用code-font和ui-font */
+
+	/* 目录字体 */
+	--toc-font: ""; /* 默认调用base-font */
+	--toc-font-size: ""; /* 默认调用base-font-size */
+
+	/* 表格字体 */
+	--table-title-font: ""; /* 默认调用heading-font */
+	--table-font: ""; /* 默认调用base-font */
+
+	/* 标题字体（总设置） */
+	--heading-Latin-font: var(--base-Latin-font); /* 默认调用base-font(bold) */
+	--heading-Chinese-font: 华文黑体;
+
+	/* 标题字体分别设置 */
+		/* 大标题（h1）字体 */
+		--title-Chinese-font: "华文黑体"; 
+		--title-font-size: 18pt;
+		/* h2字体 */
+		--h2-Chinese-font: 华文黑体; 
+		--h2-font-size: 14pt;
+		/* h3字体 */
+		--h3-Chinese-font: "华文黑体";
+		--h3-font-size: 12pt;
+		/* h4字体 */
+		--h4-Chinese-font: 华文楷体;
+		--h4-font-size: 10pt;
+		/* h5字体 */
+		--h5-Chinese-font: 华文仿宋;
+		--h5-font-size: 10pt;
+		/* h6字体 */
+		--h6-Chinese-font: 华文仿宋;
+		--h6-font-size: 9.5pt;
+
+	/* 粗体样式设置 */
+	--strong-weight: 900; /* 加粗风格时使用的字重；400等同于normal，700等同于bold，900等同于heavy */ 
+
+	/* 基础行距 */
+	--base-line-height: 16pt; 
+
+/* == 页面设置 == */
+	/* 打印页边距 */
+	--set-margin: 1.8cm 2cm 1.2cm 2cm !important;
+	/* 参阅 <https://github.com/Keldos-Li/typora-latex-theme/blob/main/README.md#特别注意> */
+
+/* == 控制设置 == */
+	/* 目录中是否显示一级标题 */
+	--toc-show-title: none; 
+}
+/* ============================================
+ * ============ TYPORA lATEX THEME ============
+ * ============================================
+ * THIS PROJECT IS BASED ON THE WORKS OF YFZHAO20 AND DU33169, 
+   WHOSE REPOSITORIES ARE ADRESSED ON 
+   <https://github.com/yfzhao20/Typora-markdown>
+   AND <https://github.com/du33169/typora-theme-essay_cn>,
+   MANY THANKS TO THEM.
+ * "TYPORA LATEX THEME" (MARKDOWN LATEX THEME)
+   IS A THEME FOR TYPORA (OR CSS FOR OTHER MARKDOWN EDITORS),
+   DESIGNED FOR CHINESE UNIVERSITY STUDENTS 
+   USED IN LATEX-STYLED ESSAYS OR EXPERIMENTAL REPORTS.
+ * COPYRIGHT (C) 2021 KELDOS; 
+   REPOSITORY ADDRESS: <https://github.com/Keldos-Li/typora-latex-theme>;
+   LISENCED UNDER GPL v3.0, SEE <https://github.com/Keldos-Li/typora-latex-theme/blob/main/LICENSE>
+ */
+
+/* LaTeX-light on Windows */
+
+@import "";
+
+body {
+    padding: 0 !important;
+    margin: 0 !important;
+    line-height: var(--base-line-height);
+    /*counter-reset: tableHead 0 imgHead 0;*/
+}
+
+/* 正文区基本属性 */
+#write {
+    font-family: var(--base-Latin-font), var(--base-Chinese-font), serif;
+    font-size: var(--base-font-size);
+    max-width: 21cm;/* A4标准宽度 */
+    background-color: white;
+    /* column-count: 2;
+    column-gap: 25px;
+    column-width: 8cm; 
+    display: inline-block; */
+    /* 这里可以试分栏的，但确实不适合实现 */
+}
+
+strong {
+    font-weight: var(--strong-weight);
+}
+
+@media screen {
+    #write {
+        padding: var(--set-margin);
+        /*border: 0.8px solid #AAC ; /* 添加一个淡蓝色的边框 */
+        box-shadow: 0 0 24px 12px #CCCCCC; /* 页边来一个阴影！！好耶 */
+    }
+}
+
+@media print {
+    #write {
+        padding: 0 !important;
+    }
+    #write a {
+        color: inherit;
+        text-decoration: none;
+    }
+    @page {
+        /* size: A4;  强制A4大小 */
+        margin: 1.8cm 2cm 1.2cm 2cm !important; /* 页边距在这里！！！！！！！！！！！！！！！！ */
+        /* 参阅 <https://github.com/Keldos-Li/typora-latex-theme/blob/main/README.md#特别注意> */
+    }
+}
+
+#write p {
+    text-align: left;
+}
+
+/*
+#write figure:after{
+  counter-increment: tableHead;
+  content: "表" counter(tableHead) " ";
+  text-align:center;
+  width:100%;
+  display:inline-block;
+}*/
+/* 图片，导出PDF时暂时无法显示 */
+/*
+#write .md-image:after{
+  counter-increment: imgHead;
+  content: "图" counter(imgHead) " ";
+  text-align:center;
+  width:100%;
+  display:inline-block;
+}
+*/
+
+/* basic样式采用一般的引言，具有左边框、左缩进 */
+blockquote {
+    font-style: normal;
+    font-family: var(--quote-font), var(--base-Latin-font), var(--base-Chinese-font), -apple-system, serif;
+    font-size: var(--quote-font-size);
+    border-left: 3px solid grey;
+    padding-left: 16px; /* 文字离左边框的距离 */
+    padding-right: 20pt;
+    margin-left: 20px; /* 左边框离页面边的距离 */
+    color: grey;
+}
+
+/*border-width: 0.5pt 0;
+  border-style:solid; 这一行本来使用了上下边框*/
+
+/* 标题属性 */
+#write h1,
+#write h2,
+#write h3,
+#write h4,
+#write h5,
+#write h6 {
+    font-weight: bold; /* 对 Windows 的修改 */
+    font-family: var(--heading-Latin-font), var(--heading-Chinese-font), sans-serif;
+    page-break-after: avoid !important;
+}
+
+#write h1 {
+    font-family: var(--heading-Latin-font), var(--title-Chinese-font), sans-serif;
+    /*font-weight: bold;*/
+    text-align: center;
+    column-span: all;
+    font-size: var(--title-font-size);
+}
+#write h2 {
+    font-family: var(--heading-Latin-font), var(--h2-Chinese-font), sans-serif;
+    font-size: var(--h2-font-size);
+}
+#write h3 {
+    font-family: var(--heading-Latin-font), var(--h3-Chinese-font), sans-serif;
+    font-size: var(--h3-font-size);
+    line-height: var(--h3-font-size);
+}
+#write h4 {
+    font-family: var(--heading-Latin-font), var(--h4-Chinese-font), sans-serif;
+    font-size: var(--h4-font-size);
+    line-height: var(--h4-font-size);
+}
+#write h5 {
+    font-family: var(--heading-Latin-font), var(--h5-Chinese-font), sans-serif;
+    font-size: var(--h5-font-size);
+    line-height: var(--h5-font-size);
+}
+#write h6 {
+    font-family: var(--heading-Latin-font), var(--h6-Chinese-font), sans-serif;
+    font-size: var(--h6-font-size);
+    line-height: var(--h5-font-size); /* 没有写错，为了避免行距太小才这么写 */
+}
+
+
+/* 三线表 */
+#write table {
+    border-top: 1.2pt solid; /* 三线表第一条线宽度 */
+    border-bottom: 1.2pt solid; /* 三线表第二条线宽度 */
+    font-family: var(--table-font), var(--base-Latin-font), var(--base-Chinese-font), serif;
+    /* font-size: var(--base-font-size); */
+    text-align: center;
+    page-break-inside: avoid;
+    border-spacing: 6px;
+    width: auto; /* 自动布局表格宽度，如果有时内容太紧建议直接加空格吧，我自己看不惯和页面等宽的大表格 */
+    margin: 0 auto; /* 使表格默认居中；虽然这个代码不好，但好像没别的实现办法 */
+}
+
+#write table td {
+    padding: 2px;
+}
+
+#write table tr {
+    padding: 2px;
+}
+
+#write th {
+    padding: 0px 6px;
+}
+
+/* 表格标题（首行）样式 */
+#write thead {
+    border-bottom: 0.5pt solid; /* 三线表表头的线 */
+    font-family: var(--table-title-font), var(--heading-Latin-font), var(--heading-Chinese-font), serif !important;
+    /* font-size: var(--base-font-size); */
+    font-weight: var(--strong-weight);
+}
+
+hr {
+  border-top: solid 0.7px #EEE;
+}
+
+img {
+    page-break-inside: avoid; /* 避免图片在导出时被断开 */
+}
+
+/* ============ 多级列表样式 ============ */
+ul {
+    list-style: disc; /* 无序列表第一级：实心圆点 */
+}
+
+ul ul {
+    /*list-style: circle;*/
+    list-style: '–　 '; /* 直接用空格代替一部分缩进的调整了我真懒 */
+    /*left: -0.8em;*/
+}
+
+ul ul ul {
+    list-style: "◦　  "; /* 无序列表第三极：小圈 */
+    left: 0.6em;
+}
+
+ol {
+    list-style: decimal;
+    /* 有序列表第一级：数字 */
+}
+
+ol ol {
+    counter-reset: liist;
+    list-style: none;
+}
+ol ol li {
+    counter-increment: liist;
+    position: relative;
+}
+ol ol li::before {
+    content: "("counter(liist, lower-alpha) ")　　"; /* 有序列表第二级：括号加小写字母 */
+    position: absolute;
+    margin-right: 2rem;
+    left: -2.4em;
+}
+
+ol ol ol {
+    counter-reset: liiist;
+    list-style: none;
+    margin: 0;
+}
+ol ol ol li {
+    counter-increment: liiist;
+    position: relative;
+}
+ol ol ol li::before {
+    content: counter(liiist, lower-roman) ".　　　"; /* 有序列表第三级：小写罗马数字 这些后续还要改的可恶*/
+    align-self: flex-end;
+    position: absolute;
+    left: -2.4em;
+    /* -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;*/
+    width: 4em; /* 为了让项目编号是重新用句点对齐而不是左对齐我调试了一整个晚上啊啊啊啊 CSS好难写 */
+    text-align: right;
+}
+
+li {
+    position: relative;
+}
+/* ============ 多级列表样式END ============ */
+
+
+/* 行内代码 */
+p code,
+li code {
+    color: rgb(60, 112, 198);
+    background-color: #fefefe;
+    font-family: var(--code-font), var(--ui-font), monospace;
+    box-sizing: border-box;
+    border-right: 0px;
+    margin: 0 2px 0 2px;
+    padding: 0 2px 0 2px;
+    border-radius: 2px 2px 2px 2px; /* 圆角 */
+    box-shadow: 0 0 1px 1px #c8d3df; /* 阴影 */
+}
+
+/* 代码块样式*/
+#write .CodeMirror-wrap {
+    padding: 10px; /* 当代码太长跨页的时候好像也会有点问题，到时候再改 */
+}
+
+#write .CodeMirror-code pre {
+    font-family: var(--code-font), var(--ui-font), monospace;
+}
+
+/* typora 编写模式 */
+#typora-source {
+    font-family: var(--sourceMode-font), var(--code-font), var(--ui-font), monospace;
+    line-height: 2rem;
+}
+
+/* 下面是标题自动编号，初始化计数器。使用多级编号，编号后加空格模仿LaTeX */
+/* 首先全局进行一次reset，这样即使不添加h1标题也可以使用较低级别的标题 */
+#write {
+    counter-reset: h2 0 h3 0 h4 0 h5 0 h6 0
+}
+
+#write h1 {
+    counter-reset: h2
+}
+h2 {
+    counter-reset: h3
+}
+h3 {
+    counter-reset: h4
+}
+h4 {
+    counter-reset: h5
+}
+h5 {
+    counter-reset: h6
+}
+
+/* put counter result into headings */
+#write h2:before {
+    counter-increment: h2;
+    content: counter(h2);
+    margin-right: 2rem;
+}
+/** override the default style for focused headings */
+#write h3:before,
+h3.md-focus.md-heading:before {
+    counter-increment: h3;
+    content: counter(h2) "."counter(h3);
+    margin-right: 2rem;
+}
+#write h4:before,
+h4.md-focus.md-heading:before {
+    counter-increment: h4;
+    content: counter(h2) "."counter(h3) "."counter(h4);
+    margin-right: 2rem;
+}
+#write h5:before,
+h5.md-focus.md-heading:before {
+    counter-increment: h5;
+    content: counter(h2) "."counter(h3) "."counter(h4) "."counter(h5);
+    margin-right: 2rem;
+}
+#write h6:before,
+h6.md-focus.md-heading:before {
+    counter-increment: h6;
+    content: counter(h2) "."counter(h3) "."counter(h4) "."counter(h5) "."counter(h6);
+    margin-right: 2rem;
+}
+
+/* 目录 */
+.md-toc-content {
+    margin-left: 2em;
+    counter-reset: toc-h2 toc-h3 toc-h4; /* 修复缺失上级标题时无法递增 */
+    page-break-after: always;
+}
+.md-toc-inner {
+    margin-left: 0 !important;
+    color: black !important;
+}
+.md-toc-item {
+    color: black !important;
+}
+
+/* 目录标题内容属性 */
+.md-toc-h2,
+.md-toc-h3,
+.md-toc-h4,
+.md-toc-h5,
+.md-toc-h6 {
+    font-size: var(--toc-font-size);
+    font-family: var(--toc-font), var(--base-Latin-font), var(--base-Chinese-font), serif;
+}
+.md-toc-h2 {
+    font-weight: var(--strong-weight);
+}
+
+/* 目录标题前 */
+.md-toc-content .md-toc-h1 {
+    display: var(--toc-show-title);
+    counter-reset: toc-h2;
+}
+.md-toc-content .md-toc-h2 {
+    counter-reset: toc-h3;
+}
+.md-toc-content .md-toc-h3 {
+    counter-reset: toc-h4;
+}
+.md-toc-content .md-toc-h4 {
+    counter-reset: toc-h5;
+}
+.md-toc-content .md-toc-h5 {
+    counter-reset: toc-h6;
+}
+.md-toc-content .md-toc-h2:before {
+    counter-increment: toc-h2;
+    content: counter(toc-h2);
+    margin-right: 1rem;
+    font-weight: var(--strong-weight);
+}
+.md-toc-content .md-toc-h3:before {
+    counter-increment: toc-h3;
+    content: counter(toc-h2) "."counter(toc-h3);
+    margin-left: 1.5rem;
+    margin-right: 0.5rem;
+}
+.md-toc-content .md-toc-h4:before {
+    counter-increment: toc-h4;
+    content: counter(toc-h2) "."counter(toc-h3) "."counter(toc-h4);
+    margin-left: 3.5rem;
+    margin-right: 0.5rem;
+}
+.md-toc-content .md-toc-h5:before {
+    counter-increment: toc-h5;
+    content: counter(toc-h2) "."counter(toc-h3) "."counter(toc-h4) "."counter(toc-h5);
+    margin-left: 5.5rem;
+    margin-right: 0.5rem;
+}
+.md-toc-content .md-toc-h6:before {
+    counter-increment: toc-h6;
+    content: counter(toc-h2) "."counter(toc-h3) "."counter(toc-h4) "."counter(toc-h5) "."counter(toc-h6);
+    margin-left: 7.5rem;
+    margin-right: 0.5rem;
+}
+
+/* 侧边大纲标题 */
+.sidebar-content .outline-h1 {
+    counter-reset: outline-h2;
+}
+.sidebar-content .outline-h2 {
+    counter-reset: outline-h3;
+}
+.sidebar-content .outline-h3 {
+    counter-reset: outline-h4;
+}
+.sidebar-content .outline-h4 {
+    counter-reset: outline-h5;
+}
+.sidebar-content .outline-h5 {
+    counter-reset: outline-h6;
+}
+.sidebar-content .outline-h2 .outline-label:before {
+    counter-increment: outline-h2;
+    content: counter(outline-h2) " ";
+}
+.sidebar-content .outline-h3 .outline-label:before {
+    counter-increment: outline-h3;
+    content: counter(outline-h2) "."counter(outline-h3) "  ";
+}
+.sidebar-content .outline-h4 .outline-label:before {
+    counter-increment: outline-h4;
+    content: counter(outline-h2) "."counter(outline-h3) "."counter(outline-h4) "  ";
+}
+.sidebar-content .outline-h5 .outline-label:before {
+    counter-increment: outline-h5;
+    content: counter(outline-h2) "."counter(outline-h3) "."counter(outline-h4) "."counter(outline-h5) "  ";
+}
+
+.sidebar-content {
+    font-family: var(--ui-font); /* 侧边栏的字体修改 */
+    list-style: none;
+}
+
+/* 元数据（如YAML front matter）的背景框 */
+pre.md-meta-block {
+    background: #CCCCCC;
+    padding: 1.4em;
+    font-family: var(--code-font), var(--ui-font), monospace;
+}
+
+/** override the default style for focused headings */
+#write>h3.md-focus:before,
+#write>h4.md-focus:before,
+#write>h5.md-focus:before,
+#write>h6.md-focus:before,
+h3.md-focus:before,
+h4.md-focus:before,
+h5.md-focus:before,
+h6.md-focus:before {
+    color: inherit;
+    border: inherit;
+    border-radius: inherit;
+    position: inherit;
+    left: initial;
+    float: none;
+    top: initial;
+    font-size: inherit;
+    padding-left: inherit;
+    padding-right: inherit;
+    vertical-align: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+}
+
+
+</style>
+</head>
+<body class='typora-export os-windows'>
+<div id='write'  class=' first-line-indent'><h1><a name="软件构造" class="md-header-anchor"></a><span>软件构造</span></h1><p><span>软件构造除了核心的编程任务之外，还涉及详细设计(数据结构与算法设计)、单元测试、集成与集成测试、以及其他活动。</span></p><h2><a name="重构" class="md-header-anchor"></a><span>重构</span></h2><p><span>修改软件系统的严谨方法，它在不改变代码外部表现的情况下改进其内部结构。</span></p><h2><a name="测试驱动开发" class="md-header-anchor"></a><span>测试驱动开发</span></h2><p><span>测试驱动开发要求程序员在编写一段代码之前，优先完成该段代码的测试代码。并在编程中重复执行测试代码，以验证程序的正确性。</span></p><h2><a name="结对编程" class="md-header-anchor"></a><span>结对编程</span></h2><p><span>两个程序员挨着坐在一起，共同协作进行软件构造活动。</span></p><h1><a name="测试" class="md-header-anchor"></a><span>测试</span></h1><blockquote><p><span>Are you building it “right”? </span><code>Validation</code></p><p><span>Are you building the “right” thing? </span><code>Verification</code></p></blockquote><h2><a name="概论" class="md-header-anchor"></a><span>概论</span></h2><p><img src="构造与测试.assets/image-20210627132810078.png" alt="image-20210627132810078" style="zoom: 80%;" /></p><h2><a name="测试用例" class="md-header-anchor"></a><span> 测试用例</span></h2><p><img src="构造与测试.assets/3.png" referrerpolicy="no-referrer"></p><h3><a name="差分测试" class="md-header-anchor"></a><span>差分测试</span></h3><ul><li><span>开发者：理解系统含义，但是只是大体上，通过流程进行了测试</span></li><li><span>独立测试人员：必须学习系统相关，但是会去尝试破坏系统，并且是通过质量来驱动测试</span></li></ul><h2><a name="桩与驱动" class="md-header-anchor"></a><span>桩与驱动</span></h2><p><img src="构造与测试.assets/4.png" style="zoom: 80%;" /></p><ol><li><code>桩程序</code><span>是被测试部件的交互环境，他扮演被测试部件需要调用的其他系统部件。桩程序对其他系统部件的扮演仅限于规格相同，内部代码要简单的多，通常是直接返回固定数据或者按照固定规则返回数据。</span></li><li><code>驱动程序</code><span>负责创建被测试部件的执行环境，并驱动和监控被测试部件执行测试用例的过程，判定测试用例的执行结果。</span></li></ol><blockquote><p><code>Stub</code><span>：代指那些包含了预定义好的数据并且在测试时返回给调用者的对象。Stub 常被用于我们不希望返回真实数据或者造成其他副作用的场景。</span></p><p><code>Mock</code><span>：代指那些仅记录它们的调用信息的对象，在测试断言中我们需要验证 Mocks 被进行了符合期望的调用。</span></p><p><code>Fake</code><span>：是那些包含了生产环境下具体实现的简化版本的对象。</span></p></blockquote><h2><a name="测试空间" class="md-header-anchor"></a><span>测试空间</span></h2><p><img src="构造与测试.assets/5.png" referrerpolicy="no-referrer"></p><h2><a name="测试层次" class="md-header-anchor"></a><span>测试层次</span></h2><p><img src="构造与测试.assets/6-1624772084564.png" style="zoom:80%;" /></p><p><span>开发者主要是进行</span><code>单元测试</code><span>，可以进行一定程度上的</span><code>集成测试</code><span>和</span><code>系统测试</code><span>。</span></p><h3><a name="重点" class="md-header-anchor"></a><span>重点</span></h3><ul><li><code>α测试</code><span>：在软件发布前，让小规模、有代表性的潜在用户试用，可以在开发机构中进行。</span></li><li><code>β测试</code><span>：在用户处进行</span></li></ul><h2><a name="单元测试" class="md-header-anchor"></a><span>单元测试</span></h2><p><img src="构造与测试.assets/7.png" style="zoom:67%;" /></p><ol><li><span>在</span><code>过程化编程</code><span>中，一个单元就是一个函数与过程。</span></li><li><span>在</span><code>面向对象编程</code><span>中，一个单元就是类的一个方法。</span></li><li><span>发现技术缺陷和代码缺陷</span></li></ol><h2><a name="集成测试" class="md-header-anchor"></a><span>集成测试</span></h2><p><span>集成测试一般在单元测试和系统测试之间。</span></p><h3><a name="自顶向下的集成测试" class="md-header-anchor"></a><span>自顶向下的集成测试</span></h3><p><img src="构造与测试.assets/image-20210627134523972.png" alt="image-20210627134523972" style="zoom: 67%;" /></p><blockquote><p><span>一定要一步一步集成</span></p></blockquote><h3><a name="自底向上的集成测试" class="md-header-anchor"></a><span>自底向上的集成测试</span></h3><p><img src="构造与测试.assets/image-20210627134609215.png" alt="image-20210627134609215" style="zoom:67%;" /></p><h2><a name="系统测试" class="md-header-anchor"></a><span>系统测试</span></h2><p><img src="构造与测试.assets/10.png" referrerpolicy="no-referrer"></p><h2><a name="测试技术" class="md-header-anchor"></a><span>测试技术</span></h2><p><img src="构造与测试.assets/11.png" style="zoom:50%;" /></p><ol><li><span>测试的目的是发现尽可能多的缺陷，并不绝对要求发现所有缺陷。</span></li></ol><h3><a name="测试用例的选择" class="md-header-anchor"></a><span>测试用例的选择</span></h3><p><img src="构造与测试.assets/12.png" style="zoom:50%;" /></p><blockquote><p><span>课本P326页图 19-7 :工程追求足够好，而不是最好。</span></p></blockquote><h3><a name="随机测试" class="md-header-anchor"></a><span>随机测试</span></h3><p><img src="构造与测试.assets/13.png" style="zoom: 50%;" /></p><p><span>比如int的越界问题：两类测试用例，不越界和越界</span></p><h3><a name="黑盒测试-重要" class="md-header-anchor"></a><span>黑盒测试 </span><mark><span>重要</span></mark></h3><ol><li><span>黑盒测试是将测试对象作为一个黑盒子，完全基于输入和输出数据来判断测试对象的正确性。</span></li></ol><h4><a name="等价类划分" class="md-header-anchor"></a><span>等价类划分</span></h4><p><img src="构造与测试.assets/14-1624772084565.png" style="zoom:50%;" /></p><ul><li><span>把所有可能的输入数据，即程序的输入域划分为若干部分(子集)，从每个子集中选取少量具有代表性的数据作为测试用例。</span></li></ul><p><img src="构造与测试.assets/15-1624772084565.png" style="zoom:50%;" /></p><h4><a name="边界值分析" class="md-header-anchor"></a><span>边界值分析</span></h4><ol><li><code>边界值分析</code><span>是等价类划分方法的补充，实践证明，错误最容易发生在各等价类的边界，而不是等价类的内部。</span></li><li><span>对定价类划分的补充，错误容易发生在各个等价类的边界上，而不是等价类的内部，因此针对边界情况设计测试用例，可以发现更多的缺陷。</span></li></ol><p><img src="构造与测试.assets/16-1624772084565.png" style="zoom: 67%;" /></p><h4><a name="决策表" class="md-header-anchor"></a><span>决策表</span></h4><ul><li><span>决策表是为复杂逻辑判断设计测试用例的技术。决策表示由条件声明、行动声明、规则选项和行动选项等四个象限组成的表格。</span></li></ul><p><img src="构造与测试.assets/17-1624772084565.png" style="zoom:50%;" /></p><h4><a name="状态转换" class="md-header-anchor"></a><span>状态转换</span></h4><ul><li><code>状态转换</code><span>是针对复杂测试对象的测试技术。该类复杂测试对象对输入数据的反映是多样的，还需要依赖自身的状态才能决定。</span></li><li><code>状态转换</code><span>包含有效转换和无效转换，只有在复杂情况和可靠性要求较高的情况下才会为无效转换设计测试用例。</span></li></ul><p><img src="构造与测试.assets/18-1624772084565.png" style="zoom:50%;" /></p><h5><a name="例子" class="md-header-anchor"></a><span>例子</span></h5><p><img src="构造与测试.assets/25-1624772084565.png" style="zoom:50%;" /></p><h3><a name="白盒测试-重要" class="md-header-anchor"></a><span>白盒测试 </span><mark><span>重要</span></mark></h3><p><code>白盒测试</code><span>是将测试对象看做透明的，不关心测试对象的规格，而是按照测试对象内部的程序结构来设计测试用例进行测试工作。</span></p><h4><a name="语句覆盖" class="md-header-anchor"></a><span>语句覆盖</span></h4><p><span>语句覆盖设计测试用例的标注是保证被测试的对象的每一行代码都至少执行了一次。</span></p><p><img src="构造与测试.assets/19-1624772084565.png" style="zoom: 50%;" />
+<img src="构造与测试.assets/image-20210627135917518.png" referrerpolicy="no-referrer" alt="image-20210627135917518"></p><h3><a name="特定测试技术" class="md-header-anchor"></a><span>特定测试技术</span></h3><p><img src="构造与测试.assets/24.png" style="zoom:67%;" /></p><h3><a name="面向对象的测试技术" class="md-header-anchor"></a><span>面向对象的测试技术</span></h3><p><img src="构造与测试.assets/28.png" style="zoom:50%;" /></p><h2><a name="测试活动" class="md-header-anchor"></a><span>测试活动</span></h2><ol><li><code>测试计划</code><span>：在开始具体的软件测试活动之前，必须首先进行测试计划，以明确测试的工作范围、资源与成本、基本策略、进度安排等。</span></li><li><code>测试设计</code><span>：测试的成功取决于有效设计的测试用例</span></li><li><code>测试执行</code><span>：执行测试前需要选择好测试工具</span></li><li><code>测试评价</code><span>：在测试完成后，必须评价测试结果</span></li><li><span>以上详见课本332页</span></li></ol><h2><a name="测试用例日志" class="md-header-anchor"></a><span>测试用例日志</span></h2><p><img src="构造与测试.assets/image-20210627140214774.png" alt="image-20210627140214774" style="zoom:67%;" /></p><h2><a name="缺陷报告" class="md-header-anchor"></a><span>缺陷报告</span></h2><p><img src="构造与测试.assets/image-20210627140159650.png" alt="image-20210627140159650" style="zoom:80%;" /></p><h2><a name="测试度量" class="md-header-anchor"></a><span>测试度量</span></h2><ul><li><code>需求覆盖率</code><span>= </span><code>被测试</code><span>的</span><code>需求数量</code><span> / </span><code>需求总数</code></li><li><code>模块覆盖率</code><span>= </span><code>被测试</code><span>的</span><code>模块数量</code><span> / </span><code>模块总数</code></li><li><code>代码覆盖率</code><span> = </span><code>被测试</code><span>的</span><code>代码行</code><span> / </span><code>代码行数</code></li></ul><h3><a name="缺陷度量" class="md-header-anchor"></a><span>缺陷度量</span></h3><p><img src="构造与测试.assets/32.png" style="zoom: 50%;" /></p><h3><a name="覆盖率" class="md-header-anchor"></a><span>覆盖率</span></h3><p><img src="构造与测试.assets/image-20210627140334537.png" alt="image-20210627140334537" style="zoom:67%;" /></p></div>
+</body>
+</html>

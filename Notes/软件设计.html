@@ -1,0 +1,799 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>软件设计</title><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 40px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  html.blink-to-pdf { font-size: 13px; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
+.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; overflow-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none 0s ease 0s; }
+.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; margin-top: 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+svg[id^="mermaidChart"] { line-height: 1em; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+
+
+.CodeMirror { height: auto; }
+.CodeMirror.cm-s-inner { background: inherit; }
+.CodeMirror-scroll { overflow: auto hidden; z-index: 3; }
+.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler { background-color: rgb(255, 255, 255); }
+.CodeMirror-gutters { border-right: 1px solid rgb(221, 221, 221); background: inherit; white-space: nowrap; }
+.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
+.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
+.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
+.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
+.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-variable { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
+.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
+.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
+.cm-s-inner .cm-property { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
+.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
+.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
+.cm-s-inner .cm-meta { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
+.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
+.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
+.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
+.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
+.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
+.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
+.cm-negative { color: rgb(221, 68, 68); }
+.cm-positive { color: rgb(34, 153, 34); }
+.cm-header, .cm-strong { font-weight: 700; }
+.cm-del { text-decoration: line-through; }
+.cm-em { font-style: italic; }
+.cm-link { text-decoration: underline; }
+.cm-error { color: red; }
+.cm-invalidchar { color: red; }
+.cm-constant { color: rgb(38, 139, 210); }
+.cm-defined { color: rgb(181, 137, 0); }
+div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
+div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
+.cm-s-inner .CodeMirror-activeline-background { background: inherit; }
+.CodeMirror { position: relative; overflow: hidden; }
+.CodeMirror-scroll { height: 100%; outline: 0px; position: relative; box-sizing: content-box; background: inherit; }
+.CodeMirror-sizer { position: relative; }
+.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar { position: absolute; z-index: 6; display: none; }
+.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow: hidden; }
+.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow: hidden; }
+.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
+.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
+.CodeMirror-gutters { position: absolute; left: 0px; top: 0px; padding-bottom: 30px; z-index: 3; }
+.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
+.CodeMirror-gutter-wrapper { position: absolute; z-index: 4; background: 0px 0px !important; border: none !important; }
+.CodeMirror-gutter-background { position: absolute; top: 0px; bottom: 0px; z-index: 4; }
+.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
+.CodeMirror-lines { cursor: text; }
+.CodeMirror pre { border-radius: 0px; border-width: 0px; background: 0px 0px; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; overflow-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; }
+.CodeMirror-wrap pre { overflow-wrap: break-word; white-space: pre-wrap; word-break: normal; }
+.CodeMirror-code pre { border-right: 30px solid transparent; width: fit-content; }
+.CodeMirror-wrap .CodeMirror-code pre { border-right: none; width: auto; }
+.CodeMirror-linebackground { position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 0; }
+.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
+.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
+.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
+.CodeMirror-measure pre { position: static; }
+.CodeMirror div.CodeMirror-cursor { position: absolute; visibility: hidden; border-right: none; width: 0px; }
+.CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
+.cm-searching { background: rgba(255, 255, 0, 0.4); }
+@media print {
+  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+}
+
+
+/* ============================================
+ * ============ TYPORA lATEX THEME ============
+ * ============================================
+ */
+
+/* userCustom on Windows */
+
+:root {
+
+/* == 字体设置 == */
+
+	/* 基准字体 */
+	--base-Latin-font: "Latin Modern Roman", "Latin Modern Roman 10"; /* 备选：Times, "Times New Roman" */
+	--base-Chinese-font: 宋体-简, 华文宋体;
+	--base-font-size: 9.5pt;
+
+	/* 引言字体 */
+	--quote-font: "Latin Modern Roman", "Latin Modern Roman 10", Times, "Times New Roman", 华文仿宋;
+	--quote-font-size: 10pt; /* 这里字体用了10pt,比正文字体稍大 */
+
+	/* 代码字体（代码中的中文会调用ui-font） */
+	--code-font: "Latin Modern Mono", "Latin Modern Mono 10";
+
+	/* 侧边栏字体 */
+	--ui-font: "阿里巴巴普惠体 2.0";
+
+	/* source mode 字体 */
+	--sourceMode-font: "SF Mono", "阿里巴巴普惠体 2.0"; /* 默认调用code-font和ui-font */
+
+	/* 目录字体 */
+	--toc-font: ""; /* 默认调用base-font */
+	--toc-font-size: ""; /* 默认调用base-font-size */
+
+	/* 表格字体 */
+	--table-title-font: ""; /* 默认调用heading-font */
+	--table-font: ""; /* 默认调用base-font */
+
+	/* 标题字体（总设置） */
+	--heading-Latin-font: var(--base-Latin-font); /* 默认调用base-font(bold) */
+	--heading-Chinese-font: 华文黑体;
+
+	/* 标题字体分别设置 */
+		/* 大标题（h1）字体 */
+		--title-Chinese-font: "华文黑体"; 
+		--title-font-size: 18pt;
+		/* h2字体 */
+		--h2-Chinese-font: 华文黑体; 
+		--h2-font-size: 14pt;
+		/* h3字体 */
+		--h3-Chinese-font: "华文黑体";
+		--h3-font-size: 12pt;
+		/* h4字体 */
+		--h4-Chinese-font: 华文楷体;
+		--h4-font-size: 10pt;
+		/* h5字体 */
+		--h5-Chinese-font: 华文仿宋;
+		--h5-font-size: 10pt;
+		/* h6字体 */
+		--h6-Chinese-font: 华文仿宋;
+		--h6-font-size: 9.5pt;
+
+	/* 粗体样式设置 */
+	--strong-weight: 900; /* 加粗风格时使用的字重；400等同于normal，700等同于bold，900等同于heavy */ 
+
+	/* 基础行距 */
+	--base-line-height: 16pt; 
+
+/* == 页面设置 == */
+	/* 打印页边距 */
+	--set-margin: 1.8cm 2cm 1.2cm 2cm !important;
+	/* 参阅 <https://github.com/Keldos-Li/typora-latex-theme/blob/main/README.md#特别注意> */
+
+/* == 控制设置 == */
+	/* 目录中是否显示一级标题 */
+	--toc-show-title: none; 
+}
+/* ============================================
+ * ============ TYPORA lATEX THEME ============
+ * ============================================
+ * THIS PROJECT IS BASED ON THE WORKS OF YFZHAO20 AND DU33169, 
+   WHOSE REPOSITORIES ARE ADRESSED ON 
+   <https://github.com/yfzhao20/Typora-markdown>
+   AND <https://github.com/du33169/typora-theme-essay_cn>,
+   MANY THANKS TO THEM.
+ * "TYPORA LATEX THEME" (MARKDOWN LATEX THEME)
+   IS A THEME FOR TYPORA (OR CSS FOR OTHER MARKDOWN EDITORS),
+   DESIGNED FOR CHINESE UNIVERSITY STUDENTS 
+   USED IN LATEX-STYLED ESSAYS OR EXPERIMENTAL REPORTS.
+ * COPYRIGHT (C) 2021 KELDOS; 
+   REPOSITORY ADDRESS: <https://github.com/Keldos-Li/typora-latex-theme>;
+   LISENCED UNDER GPL v3.0, SEE <https://github.com/Keldos-Li/typora-latex-theme/blob/main/LICENSE>
+ */
+
+/* LaTeX-light on Windows */
+
+@import "";
+
+body {
+    padding: 0 !important;
+    margin: 0 !important;
+    line-height: var(--base-line-height);
+    /*counter-reset: tableHead 0 imgHead 0;*/
+}
+
+/* 正文区基本属性 */
+#write {
+    font-family: var(--base-Latin-font), var(--base-Chinese-font), serif;
+    font-size: var(--base-font-size);
+    max-width: 21cm;/* A4标准宽度 */
+    background-color: white;
+    /* column-count: 2;
+    column-gap: 25px;
+    column-width: 8cm; 
+    display: inline-block; */
+    /* 这里可以试分栏的，但确实不适合实现 */
+}
+
+strong {
+    font-weight: var(--strong-weight);
+}
+
+@media screen {
+    #write {
+        padding: var(--set-margin);
+        /*border: 0.8px solid #AAC ; /* 添加一个淡蓝色的边框 */
+        box-shadow: 0 0 24px 12px #CCCCCC; /* 页边来一个阴影！！好耶 */
+    }
+}
+
+@media print {
+    #write {
+        padding: 0 !important;
+    }
+    #write a {
+        color: inherit;
+        text-decoration: none;
+    }
+    @page {
+        /* size: A4;  强制A4大小 */
+        margin: 1.8cm 2cm 1.2cm 2cm !important; /* 页边距在这里！！！！！！！！！！！！！！！！ */
+        /* 参阅 <https://github.com/Keldos-Li/typora-latex-theme/blob/main/README.md#特别注意> */
+    }
+}
+
+#write p {
+    text-align: left;
+}
+
+/*
+#write figure:after{
+  counter-increment: tableHead;
+  content: "表" counter(tableHead) " ";
+  text-align:center;
+  width:100%;
+  display:inline-block;
+}*/
+/* 图片，导出PDF时暂时无法显示 */
+/*
+#write .md-image:after{
+  counter-increment: imgHead;
+  content: "图" counter(imgHead) " ";
+  text-align:center;
+  width:100%;
+  display:inline-block;
+}
+*/
+
+/* basic样式采用一般的引言，具有左边框、左缩进 */
+blockquote {
+    font-style: normal;
+    font-family: var(--quote-font), var(--base-Latin-font), var(--base-Chinese-font), -apple-system, serif;
+    font-size: var(--quote-font-size);
+    border-left: 3px solid grey;
+    padding-left: 16px; /* 文字离左边框的距离 */
+    padding-right: 20pt;
+    margin-left: 20px; /* 左边框离页面边的距离 */
+    color: grey;
+}
+
+/*border-width: 0.5pt 0;
+  border-style:solid; 这一行本来使用了上下边框*/
+
+/* 标题属性 */
+#write h1,
+#write h2,
+#write h3,
+#write h4,
+#write h5,
+#write h6 {
+    font-weight: bold; /* 对 Windows 的修改 */
+    font-family: var(--heading-Latin-font), var(--heading-Chinese-font), sans-serif;
+    page-break-after: avoid !important;
+}
+
+#write h1 {
+    font-family: var(--heading-Latin-font), var(--title-Chinese-font), sans-serif;
+    /*font-weight: bold;*/
+    text-align: center;
+    column-span: all;
+    font-size: var(--title-font-size);
+}
+#write h2 {
+    font-family: var(--heading-Latin-font), var(--h2-Chinese-font), sans-serif;
+    font-size: var(--h2-font-size);
+}
+#write h3 {
+    font-family: var(--heading-Latin-font), var(--h3-Chinese-font), sans-serif;
+    font-size: var(--h3-font-size);
+    line-height: var(--h3-font-size);
+}
+#write h4 {
+    font-family: var(--heading-Latin-font), var(--h4-Chinese-font), sans-serif;
+    font-size: var(--h4-font-size);
+    line-height: var(--h4-font-size);
+}
+#write h5 {
+    font-family: var(--heading-Latin-font), var(--h5-Chinese-font), sans-serif;
+    font-size: var(--h5-font-size);
+    line-height: var(--h5-font-size);
+}
+#write h6 {
+    font-family: var(--heading-Latin-font), var(--h6-Chinese-font), sans-serif;
+    font-size: var(--h6-font-size);
+    line-height: var(--h5-font-size); /* 没有写错，为了避免行距太小才这么写 */
+}
+
+
+/* 三线表 */
+#write table {
+    border-top: 1.2pt solid; /* 三线表第一条线宽度 */
+    border-bottom: 1.2pt solid; /* 三线表第二条线宽度 */
+    font-family: var(--table-font), var(--base-Latin-font), var(--base-Chinese-font), serif;
+    /* font-size: var(--base-font-size); */
+    text-align: center;
+    page-break-inside: avoid;
+    border-spacing: 6px;
+    width: auto; /* 自动布局表格宽度，如果有时内容太紧建议直接加空格吧，我自己看不惯和页面等宽的大表格 */
+    margin: 0 auto; /* 使表格默认居中；虽然这个代码不好，但好像没别的实现办法 */
+}
+
+#write table td {
+    padding: 2px;
+}
+
+#write table tr {
+    padding: 2px;
+}
+
+#write th {
+    padding: 0px 6px;
+}
+
+/* 表格标题（首行）样式 */
+#write thead {
+    border-bottom: 0.5pt solid; /* 三线表表头的线 */
+    font-family: var(--table-title-font), var(--heading-Latin-font), var(--heading-Chinese-font), serif !important;
+    /* font-size: var(--base-font-size); */
+    font-weight: var(--strong-weight);
+}
+
+hr {
+  border-top: solid 0.7px #EEE;
+}
+
+img {
+    page-break-inside: avoid; /* 避免图片在导出时被断开 */
+}
+
+/* ============ 多级列表样式 ============ */
+ul {
+    list-style: disc; /* 无序列表第一级：实心圆点 */
+}
+
+ul ul {
+    /*list-style: circle;*/
+    list-style: '–　 '; /* 直接用空格代替一部分缩进的调整了我真懒 */
+    /*left: -0.8em;*/
+}
+
+ul ul ul {
+    list-style: "◦　  "; /* 无序列表第三极：小圈 */
+    left: 0.6em;
+}
+
+ol {
+    list-style: decimal;
+    /* 有序列表第一级：数字 */
+}
+
+ol ol {
+    counter-reset: liist;
+    list-style: none;
+}
+ol ol li {
+    counter-increment: liist;
+    position: relative;
+}
+ol ol li::before {
+    content: "("counter(liist, lower-alpha) ")　　"; /* 有序列表第二级：括号加小写字母 */
+    position: absolute;
+    margin-right: 2rem;
+    left: -2.4em;
+}
+
+ol ol ol {
+    counter-reset: liiist;
+    list-style: none;
+    margin: 0;
+}
+ol ol ol li {
+    counter-increment: liiist;
+    position: relative;
+}
+ol ol ol li::before {
+    content: counter(liiist, lower-roman) ".　　　"; /* 有序列表第三级：小写罗马数字 这些后续还要改的可恶*/
+    align-self: flex-end;
+    position: absolute;
+    left: -2.4em;
+    /* -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;*/
+    width: 4em; /* 为了让项目编号是重新用句点对齐而不是左对齐我调试了一整个晚上啊啊啊啊 CSS好难写 */
+    text-align: right;
+}
+
+li {
+    position: relative;
+}
+/* ============ 多级列表样式END ============ */
+
+
+/* 行内代码 */
+p code,
+li code {
+    color: rgb(60, 112, 198);
+    background-color: #fefefe;
+    font-family: var(--code-font), var(--ui-font), monospace;
+    box-sizing: border-box;
+    border-right: 0px;
+    margin: 0 2px 0 2px;
+    padding: 0 2px 0 2px;
+    border-radius: 2px 2px 2px 2px; /* 圆角 */
+    box-shadow: 0 0 1px 1px #c8d3df; /* 阴影 */
+}
+
+/* 代码块样式*/
+#write .CodeMirror-wrap {
+    padding: 10px; /* 当代码太长跨页的时候好像也会有点问题，到时候再改 */
+}
+
+#write .CodeMirror-code pre {
+    font-family: var(--code-font), var(--ui-font), monospace;
+}
+
+/* typora 编写模式 */
+#typora-source {
+    font-family: var(--sourceMode-font), var(--code-font), var(--ui-font), monospace;
+    line-height: 2rem;
+}
+
+/* 下面是标题自动编号，初始化计数器。使用多级编号，编号后加空格模仿LaTeX */
+/* 首先全局进行一次reset，这样即使不添加h1标题也可以使用较低级别的标题 */
+#write {
+    counter-reset: h2 0 h3 0 h4 0 h5 0 h6 0
+}
+
+#write h1 {
+    counter-reset: h2
+}
+h2 {
+    counter-reset: h3
+}
+h3 {
+    counter-reset: h4
+}
+h4 {
+    counter-reset: h5
+}
+h5 {
+    counter-reset: h6
+}
+
+/* put counter result into headings */
+#write h2:before {
+    counter-increment: h2;
+    content: counter(h2);
+    margin-right: 2rem;
+}
+/** override the default style for focused headings */
+#write h3:before,
+h3.md-focus.md-heading:before {
+    counter-increment: h3;
+    content: counter(h2) "."counter(h3);
+    margin-right: 2rem;
+}
+#write h4:before,
+h4.md-focus.md-heading:before {
+    counter-increment: h4;
+    content: counter(h2) "."counter(h3) "."counter(h4);
+    margin-right: 2rem;
+}
+#write h5:before,
+h5.md-focus.md-heading:before {
+    counter-increment: h5;
+    content: counter(h2) "."counter(h3) "."counter(h4) "."counter(h5);
+    margin-right: 2rem;
+}
+#write h6:before,
+h6.md-focus.md-heading:before {
+    counter-increment: h6;
+    content: counter(h2) "."counter(h3) "."counter(h4) "."counter(h5) "."counter(h6);
+    margin-right: 2rem;
+}
+
+/* 目录 */
+.md-toc-content {
+    margin-left: 2em;
+    counter-reset: toc-h2 toc-h3 toc-h4; /* 修复缺失上级标题时无法递增 */
+    page-break-after: always;
+}
+.md-toc-inner {
+    margin-left: 0 !important;
+    color: black !important;
+}
+.md-toc-item {
+    color: black !important;
+}
+
+/* 目录标题内容属性 */
+.md-toc-h2,
+.md-toc-h3,
+.md-toc-h4,
+.md-toc-h5,
+.md-toc-h6 {
+    font-size: var(--toc-font-size);
+    font-family: var(--toc-font), var(--base-Latin-font), var(--base-Chinese-font), serif;
+}
+.md-toc-h2 {
+    font-weight: var(--strong-weight);
+}
+
+/* 目录标题前 */
+.md-toc-content .md-toc-h1 {
+    display: var(--toc-show-title);
+    counter-reset: toc-h2;
+}
+.md-toc-content .md-toc-h2 {
+    counter-reset: toc-h3;
+}
+.md-toc-content .md-toc-h3 {
+    counter-reset: toc-h4;
+}
+.md-toc-content .md-toc-h4 {
+    counter-reset: toc-h5;
+}
+.md-toc-content .md-toc-h5 {
+    counter-reset: toc-h6;
+}
+.md-toc-content .md-toc-h2:before {
+    counter-increment: toc-h2;
+    content: counter(toc-h2);
+    margin-right: 1rem;
+    font-weight: var(--strong-weight);
+}
+.md-toc-content .md-toc-h3:before {
+    counter-increment: toc-h3;
+    content: counter(toc-h2) "."counter(toc-h3);
+    margin-left: 1.5rem;
+    margin-right: 0.5rem;
+}
+.md-toc-content .md-toc-h4:before {
+    counter-increment: toc-h4;
+    content: counter(toc-h2) "."counter(toc-h3) "."counter(toc-h4);
+    margin-left: 3.5rem;
+    margin-right: 0.5rem;
+}
+.md-toc-content .md-toc-h5:before {
+    counter-increment: toc-h5;
+    content: counter(toc-h2) "."counter(toc-h3) "."counter(toc-h4) "."counter(toc-h5);
+    margin-left: 5.5rem;
+    margin-right: 0.5rem;
+}
+.md-toc-content .md-toc-h6:before {
+    counter-increment: toc-h6;
+    content: counter(toc-h2) "."counter(toc-h3) "."counter(toc-h4) "."counter(toc-h5) "."counter(toc-h6);
+    margin-left: 7.5rem;
+    margin-right: 0.5rem;
+}
+
+/* 侧边大纲标题 */
+.sidebar-content .outline-h1 {
+    counter-reset: outline-h2;
+}
+.sidebar-content .outline-h2 {
+    counter-reset: outline-h3;
+}
+.sidebar-content .outline-h3 {
+    counter-reset: outline-h4;
+}
+.sidebar-content .outline-h4 {
+    counter-reset: outline-h5;
+}
+.sidebar-content .outline-h5 {
+    counter-reset: outline-h6;
+}
+.sidebar-content .outline-h2 .outline-label:before {
+    counter-increment: outline-h2;
+    content: counter(outline-h2) " ";
+}
+.sidebar-content .outline-h3 .outline-label:before {
+    counter-increment: outline-h3;
+    content: counter(outline-h2) "."counter(outline-h3) "  ";
+}
+.sidebar-content .outline-h4 .outline-label:before {
+    counter-increment: outline-h4;
+    content: counter(outline-h2) "."counter(outline-h3) "."counter(outline-h4) "  ";
+}
+.sidebar-content .outline-h5 .outline-label:before {
+    counter-increment: outline-h5;
+    content: counter(outline-h2) "."counter(outline-h3) "."counter(outline-h4) "."counter(outline-h5) "  ";
+}
+
+.sidebar-content {
+    font-family: var(--ui-font); /* 侧边栏的字体修改 */
+    list-style: none;
+}
+
+/* 元数据（如YAML front matter）的背景框 */
+pre.md-meta-block {
+    background: #CCCCCC;
+    padding: 1.4em;
+    font-family: var(--code-font), var(--ui-font), monospace;
+}
+
+/** override the default style for focused headings */
+#write>h3.md-focus:before,
+#write>h4.md-focus:before,
+#write>h5.md-focus:before,
+#write>h6.md-focus:before,
+h3.md-focus:before,
+h4.md-focus:before,
+h5.md-focus:before,
+h6.md-focus:before {
+    color: inherit;
+    border: inherit;
+    border-radius: inherit;
+    position: inherit;
+    left: initial;
+    float: none;
+    top: initial;
+    font-size: inherit;
+    padding-left: inherit;
+    padding-right: inherit;
+    vertical-align: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+}
+
+
+</style>
+</head>
+<body class='typora-export os-windows'>
+<div id='write'  class=' first-line-indent'><h1><a name="软件设计" class="md-header-anchor"></a><span>软件设计</span></h1><h2><a name="定义" class="md-header-anchor"></a><span>定义</span></h2><ol start='' ><li><span>软件设计是指关于软件对象的设计，是一种设计活动。软件设计既指软件对象实现的规格说明，又指这个规格说明产生的过程。</span></li><li><span>软件设计活动以需求开发的制品(需求规格说明和分析模型)为基础，构建软件设计方案描述和原型，为后期的构造活动提供规划或蓝图。</span></li><li><span>软件设计兼具工程性和艺术性，由于软件系统的可变性，软件设计具有演化性，也因为软件设计的过程实际上就是一系列决策发生的过程，软件设计具有决策性。</span></li></ol><h2><a name="核心思想" class="md-header-anchor"></a><span>核心思想</span></h2><h3><a name="分解" class="md-header-anchor"></a><span>分解</span></h3><p><span>横向上将系统分割为几个相对简单的子系统与子系统之间的关系</span></p><h3><a name="抽象" class="md-header-anchor"></a><span>抽象</span></h3><p><span>在纵向上聚焦个子系统的接口(这里的接口与实现相对)，可以分离接口和实现，使得人们更好的关注软件系统本质，降低复杂度。</span></p><h2><a name="核心层次" class="md-header-anchor"></a><span>核心层次</span></h2><h3><a name="高层设计" class="md-header-anchor"></a><span>高层设计</span></h3><p><span>高层设计基于反映软件高层抽象的构件设计，描述系统的高层结构、关注点和设计决策。</span></p><ol start='' ><li><strong><span>部件</span></strong><span>承载了系统主要的</span><strong><span>计算与状态</span></strong></li><li><strong><span>连接件</span></strong><span>承载部件之间的</span><strong><span>交互</span></strong></li><li><span>部件与连接件都是抽象的类型定义(就像类定义)，它们的实例(就像类的对象实例)组织构成软件系统的整体结构，</span><strong><span>配置</span></strong><span>将它们的实例连接起来</span></li></ol><h3><a name="中层设计" class="md-header-anchor"></a><span>中层设计</span></h3><p><span>中层设计更加关注组成构件的模块的设计、导入/导出、过程之间调用关系或者类之间的协作，模块划分</span><strong><span>隐藏</span></strong><span>⼀些程序片段(数据结构+算法)的细节，暴露接口于外界。</span></p><h3><a name="低层设计" class="md-header-anchor"></a><span>低层设计</span></h3><p><span>低层设计深入模块和类的内部，关注具体的数据结构、算法、类型、语句和控制结构等。</span></p><h1><a name="详细设计" class="md-header-anchor"></a><span>详细设计</span></h1><h2><a name="详细设计的出发点" class="md-header-anchor"></a><span>详细设计的出发点</span></h2><p><span>软件详细设计是在软件体系结构设计之后进行，以需求开发的结果(需求规格说明和需求分析模型)和软件体系结构的结果(软件体系结构设计方案与原型)为出发点。</span></p><h2><a name="职责" class="md-header-anchor"></a><span>职责</span></h2><h3><a name="定义-n889" class="md-header-anchor"></a><span>定义</span></h3><p><span>职责是执行任务(操作职责)或维护某些数据(数据职责)的义务。我们可以通过职责建立静态设计模型。</span></p><h3><a name="行为职责和数据职责" class="md-header-anchor"></a><span>行为职责和数据职责</span></h3><ol start='' ><li><span>行为职责通常由行为来履行。</span></li><li><span>数据职责通常由属性来完成。</span></li><li><span>可能会涉及到类之间的协作。</span></li></ol><h3><a name="行为职责和属性职责" class="md-header-anchor"></a><span>行为职责和属性职责</span></h3><ol start='' ><li><span>属性职责:对象的状态</span></li><li><span>行为职责:对象的行为</span></li></ol><h2><a name="职责分配" class="md-header-anchor"></a><span>职责分配</span></h2><blockquote><p><span>将比较大的职责给很多对象。</span></p></blockquote><h3><a name="grasp原则通用职责分配软件模式）" class="md-header-anchor"></a><span>GRASP原则（通用职责分配软件模式）</span></h3><blockquote><p><span>General Responsibility Assignment Software Pattern</span></p></blockquote><h4><a name="特点" class="md-header-anchor"></a><span>特点</span></h4><ul><li><code>低耦合</code><span>：分配一个职责要保证低耦合度。</span></li><li><code>高内聚</code><span>：分配一个职责的时候要保持类的高聚合度。</span></li><li><code>信息专家</code><span>：将一个职责分配给专家-履行职责所必须的信息的类，统一提供对外的接口，而不是某一个具体的接口，数据和行为不要分开。</span></li><li><code>创建者</code><span>：详见</span><code>创建规则</code><span>。</span></li><li><code>控制者</code><span>：详见</span><code>控制规则</code><span>(避免大多数信息由一个类发出、组件相对较小、行为职责和数据绑定、职责单一)。</span></li></ul><h4><a name="拇指原则" class="md-header-anchor"></a><span>拇指原则</span></h4><p><span>研究出来良好内聚性、耦合性和稳定性的替代方案。</span></p><h4><a name="创建规则" class="md-header-anchor"></a><span>创建规则</span></h4><p><span>如果有以下情况，则由创建者分配给</span><code>B类</code><span>创建</span><code>A类</code><span>实例的职责：</span></p><ol start='' ><li><span>B 聚集了 A 对象</span></li><li><span>B 包含了 A 对象</span></li><li><span>B 记录了 A 的实例</span></li><li><span>B 要经常使用 A 对象</span></li><li><span>当 A 的实例被创建，B具有传递给A的初始化数据(也就是 B 是创建 A 的实例这项任务的信息专家)</span></li><li><span>在有选择的地方，更喜欢B聚合或包含A对象</span></li></ol><figure><table><thead><tr><th>&nbsp;</th><th>&nbsp;</th></tr></thead><tbody><tr><td><img src="软件设计.assets/19.png" referrerpolicy="no-referrer"></td><td><mark><span>组合</span></mark><span>关系；</span><br><span>单向被</span><mark><span>关联</span></mark><span>（不用可归还）；</span><br><span>持有必要数据（根据实际情况）；</span><br><mark><span>聚合</span></mark><span>关系（情况复杂，需要等待时机）</span></td></tr></tbody></table></figure><h2><a name="协作" class="md-header-anchor"></a><span>协作</span></h2><h3><a name="定义-n948" class="md-header-anchor"></a><span>定义</span></h3><p><span>程序中的对象互相协作，完成一个较大的职责。我们通过协作建立动态设计模型</span></p><h3><a name="协作的测试" class="md-header-anchor"></a><span>协作的测试</span></h3><p><img src="软件设计.assets/51.png" referrerpolicy="no-referrer"></p><ol start='' ><li><span>Mock Object类似于Stub，但是更加简单</span></li></ol><h3><a name="集成测试" class="md-header-anchor"></a><span>集成测试</span></h3><p><code>Fake</code><span> 是那些包含了生产环境下具体实现的简化版本的对象；</span></p><p><code>Stub</code><span> 代指那些包含了预定义好的数据并且在测试时返回给调用者的对象。Stub 常被用于我们不希望返回真实数据或者造成其他副作用的场景；</span></p><p><code>Mocks</code><span> 代指那些仅记录它们的调用信息的对象，在测试断言中我们需要验证 Mocks 被进行了符合期望的调用。</span></p><h2><a name="控制风格" class="md-header-anchor"></a><span>控制风格</span></h2><h3><a name="集中式控制风格" class="md-header-anchor"></a><span>集中式控制风格</span></h3><p><span>一个额外的控制器记录系统行为的所有逻辑，容易找到做出决定的位置，但是控制器比较庞大，复杂且难以理解，都是控制器调用他者。</span></p><h3><a name="委托式控制风格" class="md-header-anchor"></a><span>委托式控制风格</span></h3><p><span>做出决策的对象不知有一个，职责的分解决定了控制对象的层次。</span></p><h3><a name="分散式控制风格" class="md-header-anchor"></a><span>分散式控制风格</span></h3><p><span>系统行为的逻辑通过对象网络</span><strong><span>广泛传播</span></strong><span>，隐藏信息很难，内聚性比较差。</span></p><p><img src="软件设计.assets/image-20210625215536882.png" referrerpolicy="no-referrer" alt="image-20210625215536882"></p><h1><a name="内聚和耦合" class="md-header-anchor"></a><span>内聚和耦合</span></h1><h2><a name="内聚" class="md-header-anchor"></a><span>内聚</span></h2><p><span>表达的是一个模块内部的联系的紧密性。</span></p><p><img src="软件设计.assets/image-20210625221647873.png" referrerpolicy="no-referrer" alt="image-20210625221647873"></p><p>&nbsp;</p><figure><table><thead><tr><th><span>类型</span></th><th><span>实例</span></th><th><span>说明</span></th></tr></thead><tbody><tr><td><span>偶然内聚</span><mark><span>不可接受</span></mark></td><td><img src="软件设计.assets/36-1624630526087.png" style="zoom:50%;" /></td><td><span>完全不相关</span></td></tr><tr><td><span>逻辑内聚</span><mark><span>不可接受</span></mark></td><td><img src="软件设计.assets/36-1624630526087.png" style="zoom:50%;" /></td><td><span>执行一系列操作，具体操作交给具体模块(如swtich)，解决控制耦合的方法</span></td></tr><tr><td><span>时间内聚</span></td><td><img src="软件设计.assets/37.png" style="zoom:50%;" /></td><td><span>执行一系列和时间有关的操作，比如构造方法和析构方法</span></td></tr><tr><td><span>过程内聚</span></td><td><img src="软件设计.assets/38.png" style="zoom:50%;" /></td><td><span>执行一系列与步骤顺序有关的操作</span></td></tr><tr><td><span>通信内聚</span></td><td><img src="软件设计.assets/39.png" style="zoom:50%;" /></td><td><span>执行一系列与步骤顺序有关的操作，并且这些操作是在相同的数据结构上。</span></td></tr><tr><td><span>功能内聚</span></td><td><img src="软件设计.assets/40.png" style="zoom:50%;" /></td><td><span>模块只执行一个操作或达到一个单一目的</span></td></tr><tr><td><span>信息内聚</span></td><td><img src="软件设计.assets/41.png" style="zoom:50%;" /></td><td><span>模块进行许多操作，各自有各自的入口，相互独立，且在相同的数据结构上完成操作。</span></td></tr></tbody></table></figure><h2><a name="耦合" class="md-header-anchor"></a><span>耦合</span></h2><p><span>描述的是两个模块之间关系的复杂程度。</span></p><p><img src="软件设计.assets/image-20210625221801825.png" referrerpolicy="no-referrer" alt="image-20210625221801825"></p><figure><table><thead><tr><th><span>类型</span></th><th><span>实例</span></th><th><span>说明</span></th></tr></thead><tbody><tr><td><span>数据耦合</span></td><td><img src="软件设计.assets/45.png" style="zoom:50%;" /></td><td><span>两个模块的所有参数是同类型的数据项(发送正好)</span></td></tr><tr><td><span>印记耦合</span></td><td><img src="软件设计.assets/29.png" referrerpolicy="no-referrer"></td><td><span>两个模块共享一个数据结构，但是只用了其中一个部分(发送多了)</span></td></tr><tr><td><span>控制耦合</span></td><td><img src="软件设计.assets/31.png" referrerpolicy="no-referrer"></td><td><span>一个模块给另一个模块传递了控制信息(除了数据还有控制信号，并且违反了单一职责原则)主要是case中不应该出现具体实现的代码，应该抽象成方法</span></td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td><span>重复耦合</span><br><mark><span>不可接受</span></mark></td><td><img src="软件设计.assets/image-20210625223942767.png" referrerpolicy="no-referrer" alt="image-20210625223942767"></td><td><span>一个模块有逻辑上相同的重复代码</span></td></tr><tr><td><span>公共耦合</span><br><mark><span>不可接受</span></mark></td><td><img src="软件设计.assets/image-20210625224025928.png" referrerpolicy="no-referrer" alt="image-20210625224025928"></td><td><span>模块之间共享全局数据结构</span></td></tr><tr><td><span>内容耦合</span><br><mark><span>不可接受</span></mark></td><td>&nbsp;</td><td><span>一个模块直接修改另一个模块的内容(成员变量、函数等)</span></td></tr></tbody></table></figure><h3><a name="面向对象耦合" class="md-header-anchor"></a><span>面向对象耦合</span></h3><h4><a name="隐式耦合" class="md-header-anchor"></a><span>隐式耦合</span></h4><p><span>不设置局部变量，级联调用</span></p><h4><a name="显示耦合" class="md-header-anchor"></a><span>显示耦合</span></h4><p><span>可以通过委托方式完成</span></p><h4><a name="继承耦合" class="md-header-anchor"></a><span>继承耦合</span></h4><p><img src="软件设计.assets/11.png" referrerpolicy="no-referrer"></p><h1><a name="kwic的实现" class="md-header-anchor"></a><span>KWIC的实现</span></h1><ol start='' ><li><span>MS:主程序子程序，分别调用</span></li><li><span>OO:职责和协作</span></li><li><span>Pipe Filter:数据进入过滤器，通过管理连接过滤器，每一个过滤器是独自运行的，多线程</span></li><li><span>Event:基于事件，订阅者和分发者</span></li></ol><h1><a name="信息隐藏" class="md-header-anchor"></a><span>信息隐藏</span></h1><h2><a name="定义-n1059" class="md-header-anchor"></a><span>定义</span></h2><p><span>每一个模块都隐藏了这个模块中关于重要设计决策的实现，以至于只有这个模块的每一个组成部分才能知道具体的细节</span></p><h2><a name="基本思想" class="md-header-anchor"></a><span>基本思想</span></h2><p><span>每个模块都隐藏了重要设计决策的实现，因此只有该模块的组成部分才知道详细信息：特别是如果存在所有可能的设计更改的列表-隐藏假设列表</span></p><h2><a name="秘密" class="md-header-anchor"></a><span>秘密</span></h2><h3><a name="主要秘密" class="md-header-anchor"></a><span>主要秘密</span></h3><p><span>主要秘密描述的是这个模块所要实现的</span><strong><span>用户需求</span></strong><span>。是设计者对⽤户需求的实现的⼀次职责分配。有了这个描述以后，我们可以利⽤它检查我们是否完成所有的⽤户需求，还可以利⽤它和需求优先级来决定开发的次序。</span></p><h3><a name="次要秘密" class="md-header-anchor"></a><span>次要秘密</span></h3><p><span>次要秘密描述的是模块在实现职责时候所涉及的具体的</span><strong><span>实现细节</span></strong><span>。包括数据结构，算法，硬件平台等信息。</span></p><h2><a name="两种常见的信息隐藏" class="md-header-anchor"></a><span>两种常见的信息隐藏</span></h2><h3><a name="根据需求分配的职责" class="md-header-anchor"></a><span>根据需求分配的职责</span></h3><p><span>实践表明，需求是经常变化的，频率和幅度都很大；</span></p><h3><a name="内部实现机制" class="md-header-anchor"></a><span>内部实现机制</span></h3><p><span>常见的变化主题包括硬件依赖，输入输出形式，非标准语言特征和库，负责的设计和实现，复杂的数据结构，复杂的逻辑，全局变量。数据大小限制等。</span></p><h1><a name="设计原则汇总" class="md-header-anchor"></a><span>设计原则汇总</span></h1><h2><a name="原则一全局变量是被认为是有害的" class="md-header-anchor"></a><span>原则一：全局变量是被认为是有害的</span></h2><p><span>公共耦合是有风险，而且会增加潜在连接数量。</span></p><h2><a name="原则二如果没有特殊要求让代码清晰一点" class="md-header-anchor"></a><span>原则二：如果没有特殊要求，让代码清晰一点:</span></h2><p><span>让代码兼顾明确和可修改性。</span></p><h2><a name="原则三避免重复" class="md-header-anchor"></a><span>原则三：避免重复</span></h2><p><span>面向接口编程，而不是重复地写逻辑上一致的代码。</span></p><h2><a name="原则四面向接口编程" class="md-header-anchor"></a><span>原则四：面向接口编程</span></h2><h2><a name="原则五迪米特法则" class="md-header-anchor"></a><span>原则五：迪米特法则</span></h2><ol start='' ><li><span>你可以自己玩。(this)</span></li><li><span>你可以玩自己的玩具，但不能拆开它们(自己的成员变量)</span></li><li><span>你可以玩送给你的玩具。(方法)</span></li><li><span>你可以玩自己制作的玩具。(自己创建的对象)</span></li><li><span>强调的是不能出现a.b.Methods这类情况，不能人去动狗的腿，而是人命令狗，狗动腿</span></li></ol><h2><a name="原则六接口隔离原则isp也叫接口最小化原则" class="md-header-anchor"></a><span>原则六：接口隔离原则(ISP)/也叫接口最小化原则</span></h2><ol start='' ><li><span>将大的接口拆解成几个小的接口。</span></li><li><span>这样可以有效避免出现不必要的依赖。</span></li></ol><h2><a name="原则七里氏替换原则lsp" class="md-header-anchor"></a><span>原则七：里氏替换原则(LSP)</span></h2><ol start='' ><li><span>所有派生类都必须可以替代其基类</span></li><li><span>派生类的前置条件更弱，后置条件更强</span></li><li><span>解决方案:在父类中添加方法或者函数，或者拆分接口</span></li></ol><p><img src="软件设计.assets/30-1624632307234.png" referrerpolicy="no-referrer"></p><ul><li><span>应该分为Door和Alerm两个接口，第一个CommonDoor不应该实现alerm</span></li></ul><h2><a name="原则八组合代替继承" class="md-header-anchor"></a><span>原则八：组合代替继承</span></h2><p><span>MyStack 组合 Vector</span></p><h2><a name="原则九单一职责原则一个类只能有一个改变的理由" class="md-header-anchor"></a><span>原则九：单一职责原则:一个类只能有一个改变的理由</span></h2><h2><a name="原则十最小化类和成员的可访问性x是可见" class="md-header-anchor"></a><span>原则十：最小化类和成员的可访问性(x是可见)</span></h2><ul><li><span>是不是需要public</span></li><li><span>类声明前没有public，则包内可见</span></li><li><span>方法生命前没有public，则包内可见</span></li><li><span>public修饰是全局可见</span></li></ul><p><img src="软件设计.assets/11-1624632307234.png" referrerpolicy="no-referrer"></p><h2><a name="原则十一开放封闭原则ocp" class="md-header-anchor"></a><span>原则十一：开放/封闭原则(OCP)</span></h2><ol start='' ><li><span>对扩展开放：模块的行为可以被扩展，比如新添加一个子类</span></li><li><span>对修改关闭：模块中的源代码不应该被修改</span></li><li><span>RTTI(运行时类型信息违反了开闭原则LSP)，就是如果都有的话则抽象成基类的方法。</span></li></ol><h2><a name="原则十二依赖倒置原则dip高级模块不应依赖于低级模块两者都应依赖抽象" class="md-header-anchor"></a><span>原则十二：依赖倒置原则(DIP):高级模块不应依赖于低级模块：两者都应依赖抽象。</span></h2><p><img src="软件设计.assets/5.png" referrerpolicy="no-referrer"></p><h2><a name="内聚耦合度量了解）" class="md-header-anchor"></a><span>内聚耦合度量（了解）</span></h2><ul><li><p><code>对象类之间的耦合</code><span>：</span></p><p><span>CBO = 该类访问其他类的成员方法的数量 + 其他类的成员访问该类的成员方法的数量</span></p></li><li><p><code>数据抽象耦合</code></p><p><span>DAC = 统计一类包含的其他类的其他类的实例的数量，不包括继承关系带来的实例引用</span></p></li><li><p><code>输入耦合度</code><span> </span></p><p><span>Ca:在此类之外依赖于这类内部的类的数量</span></p></li><li><p><code>输出耦合度</code><span> </span></p><p><span>Ce:这个类中依赖于这个类的外部的类的数量</span></p></li><li><p><code>继承树的深度</code></p><p><span>DIT = 从节点到根的继承树</span></p></li><li><p><code>子类的数量</code></p><p><span>NOC = 一个类的直接子类的数量</span></p></li><li><p><code>类凝聚力</code><span> </span></p><p><span>LCOM</span></p></li></ul><h1><a name="可修改性可扩展性灵活性" class="md-header-anchor"></a><span>可修改性、可扩展性、灵活性</span></h1><h2><a name="实现的可修改性涉及到大的场景的修改" class="md-header-anchor"></a><span>实现的</span><strong><span>可修改性</span></strong><span>:涉及到大的场景的修改</span></h2><ol start='' ><li><span>对已有实现的修改</span></li><li><span>例如：修改现有促销策略</span></li></ol><h2><a name="实现的可扩展性dip--ocp" class="md-header-anchor"></a><span>实现的</span><strong><span>可扩展性</span></strong><span>(DIP &amp; OCP)</span></h2><ol start='' ><li><span>对新的实现的扩展</span></li><li><span>例如：增加一条新的促销策略(策略模式)</span></li></ol><h2><a name="实现的灵活性" class="md-header-anchor"></a><span>实现的</span><strong><span>灵活性</span></strong></h2><ol start='' ><li><span>对实现的动态配置</span></li><li><span>例如：动态修改更改某商品对应促销策略</span></li></ol><h1><a name="设计模式" class="md-header-anchor"></a><span>设计模式</span></h1><h2><a name="概述" class="md-header-anchor"></a><span>概述</span></h2><p><img src="软件设计.assets/image-20210625230712665.png" referrerpolicy="no-referrer" alt="image-20210625230712665"></p><h2><a name="策略模式" class="md-header-anchor"></a><span>策略模式</span></h2><p><img src="软件设计.assets/image-20210625230808277.png" alt="image-20210625230808277" style="zoom:50%;" /></p><p><span>在策略模式中，一个类的行为或其算法都可以在运行时改变。属</span><strong><span>行为型模式</span></strong><span>。</span></p><p><span>在策略模式中，我们创建表示各种策略的对象和一个行为随着策略对象改变而改变的context对象。策略独享改变context对象的执行算法。</span></p><h3><a name="上下文contex）" class="md-header-anchor"></a><span>上下文（Contex）: </span></h3><ul><li><span>被配置了具体策略 ConcreteStrategy；</span></li><li><span>拥有Strategy对象的一个引用；</span></li><li><span>实现了一些方法以供Strategy访问其数据。</span></li></ul><h3><a name="策略strategy）" class="md-header-anchor"></a><span>策略（Strategy）</span></h3><p><span>声明了所支持策略的接口。 Context利用这些被ConcreteStrategy定义的接口。</span></p><h4><a name="具体策略concretestrategy）" class="md-header-anchor"></a><span>具体策略（ConcreteStrategy）</span></h4><p><span>实现了Strategy声明 的接口，给出了具体的实现。</span></p><h2><a name="工厂模式" class="md-header-anchor"></a><span>工厂模式</span></h2><blockquote><p><span>职责抽象、接口重用。</span></p></blockquote><p><img src="软件设计.assets/image-20210625232044200.png" alt="image-20210625232044200" style="zoom:67%;" /></p><h3><a name="抽象工厂模式" class="md-header-anchor"></a><span>抽象工厂模式</span></h3><p><span>在软件系统中，经常面临着“多种对象”的创建工作，由于需求的变化，多种对象的具体实现有时候需要灵活组合。比如汽车由引擎、轮胎、车身、车门等各部件组成。为每一种情况都新建一个工厂会导致“组合爆炸”问题。</span></p><p><span>所以，我们提供了两套接口： </span></p><p><span>一是表现出稳定的工厂行为（创建不同的对象）的工厂接口；</span></p><p><span>二是表现出稳定产品行为的产品接口。从而，实现了工厂多态和产品多态。</span></p><p><img src="软件设计.assets/image-20210625232349937.png" referrerpolicy="no-referrer" alt="image-20210625232349937"></p><h3><a name="工厂方法模式" class="md-header-anchor"></a><span>工厂方法模式</span></h3><p><img src="软件设计.assets/image-20210625233231499.png" referrerpolicy="no-referrer" alt="image-20210625233231499"></p><p><span>工厂接口可以通过抽象工厂模式的专门 的接口来实现，另外也 可以通过父类的工厂方法，来让子类继承相应 的工厂接口，这就是工 厂方法模式（Factory  Method Pattern）。</span></p><h2><a name="单件模式" class="md-header-anchor"></a><span>单件模式</span></h2><blockquote><p><span>信息隐藏、职责抽象。</span></p></blockquote><p><img src="软件设计.assets/image-20210625233408280.png" alt="image-20210625233408280" style="zoom:50%;" /></p><p><span>这个东西的代码实现想必早已烂熟于心了吧？</span></p><h2><a name="迭代器模式" class="md-header-anchor"></a><span>迭代器模式</span></h2><p><span>迭代器模式提供一种顺序访问一个聚合对 象的各个元素，而不暴露其内部表示。</span></p><p><img src="软件设计.assets/image-20210625233757830.png" alt="image-20210625233757830" style="zoom:67%;" /></p><p>&nbsp;</p><p><span>对于</span><span class="MathJax_SVG" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="2.922ex" height="2.945ex" viewBox="0 -871 1258 1268" role="img" focusable="false" style="vertical-align: -0.922ex;"><defs><path stroke-width="0" id="E2-MJMATHI-67" d="M311 43Q296 30 267 15T206 0Q143 0 105 45T66 160Q66 265 143 353T314 442Q361 442 401 394L404 398Q406 401 409 404T418 412T431 419T447 422Q461 422 470 413T480 394Q480 379 423 152T363 -80Q345 -134 286 -169T151 -205Q10 -205 10 -137Q10 -111 28 -91T74 -71Q89 -71 102 -80T116 -111Q116 -121 114 -130T107 -144T99 -154T92 -162L90 -164H91Q101 -167 151 -167Q189 -167 211 -155Q234 -144 254 -122T282 -75Q288 -56 298 -13Q311 35 311 43ZM384 328L380 339Q377 350 375 354T369 368T359 382T346 393T328 402T306 405Q262 405 221 352Q191 313 171 233T151 117Q151 38 213 38Q269 38 323 108L331 118L384 328Z"></path><path stroke-width="0" id="E2-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path stroke-width="0" id="E2-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E2-MJMATHI-67" x="0" y="0"></use><use xlink:href="#E2-MJMAIN-28" x="480" y="0"></use><use xlink:href="#E2-MJMAIN-29" x="869" y="0"></use></g></svg></span><script type="math/tex">g()</script><span>的来说，往往可能只是希望挨个访问某个聚合结构。而且我们往往并不希望让</span><span class="MathJax_SVG" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="2.922ex" height="2.945ex" viewBox="0 -871 1258 1268" role="img" focusable="false" style="vertical-align: -0.922ex;"><defs><path stroke-width="0" id="E2-MJMATHI-67" d="M311 43Q296 30 267 15T206 0Q143 0 105 45T66 160Q66 265 143 353T314 442Q361 442 401 394L404 398Q406 401 409 404T418 412T431 419T447 422Q461 422 470 413T480 394Q480 379 423 152T363 -80Q345 -134 286 -169T151 -205Q10 -205 10 -137Q10 -111 28 -91T74 -71Q89 -71 102 -80T116 -111Q116 -121 114 -130T107 -144T99 -154T92 -162L90 -164H91Q101 -167 151 -167Q189 -167 211 -155Q234 -144 254 -122T282 -75Q288 -56 298 -13Q311 35 311 43ZM384 328L380 339Q377 350 375 354T369 368T359 382T346 393T328 402T306 405Q262 405 221 352Q191 313 171 233T151 117Q151 38 213 38Q269 38 323 108L331 118L384 328Z"></path><path stroke-width="0" id="E2-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path stroke-width="0" id="E2-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E2-MJMATHI-67" x="0" y="0"></use><use xlink:href="#E2-MJMAIN-28" x="480" y="0"></use><use xlink:href="#E2-MJMAIN-29" x="869" y="0"></use></g></svg></span><script type="math/tex">g()</script><span>知道到底是什么样的聚合结构，因此我们便引入了</span><code>迭代器模式</code><span>。</span></p><pre lang="java" class="md-fences md-end-block md-fences-with-lineno ty-contain-cm modeLoaded" spellcheck="false"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="java"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 10px; left: 41px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 27px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: -27px; width: 27px;"></div><div class="CodeMirror-gutter-wrapper CodeMirror-activeline-gutter" style="left: -27px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt CodeMirror-linenumber-show" style="left: 0px; width: 18px;">1</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">for</span>(<span class="cm-variable">iterator</span> <span class="cm-variable">i</span> <span class="cm-operator">=</span> <span class="cm-variable">c</span>.<span class="cm-variable">iterator</span>(); <span class="cm-variable">i</span>.<span class="cm-variable">hasNext</span>();){</span></pre></div><div class="" style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -27px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 18px;">2</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">do_something_with</span>(<span class="cm-variable">i</span>.<span class="cm-variable">next</span>());</span></pre></div><div class="" style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -27px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt CodeMirror-linenumber-show" style="left: 0px; width: 18px;">3</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 63px;"></div><div class="CodeMirror-gutters" style="height: 63px; left: 0px;"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 26px;"></div></div></div></div></pre><p>&nbsp;</p><p>&nbsp;</p></div>
+</body>
+</html>
